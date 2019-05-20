@@ -1,18 +1,11 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet } from "react-native";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
-  }
-});
+import { Text, View } from "react-native";
+import basicStyles from "notas/src/styles/basicStyles";
 
 class CategoriesScreen extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <View style={basicStyles.container}>
         <Text> Categorías de notas </Text>
       </View>
     );
