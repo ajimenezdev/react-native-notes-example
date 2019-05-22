@@ -7,45 +7,17 @@
  */
 
 import React, { Component } from "react";
-import { Platform, StyleSheet, Text, View } from "react-native";
-import {
-  NotesScreen,
-  NoteScreen,
-  CategoriesScreen,
-  SettingsScreen
-} from "ReactNativeNotas/src/screens";
+import { StatusBar } from "react-native";
+import AppNavigator from "./src/navigation/AppNavigator";
 
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
 type Props = {};
 export default class App extends Component<Props> {
   render() {
-    return <NotesScreen />;
-    // return <NoteScreen />;
-    // return <CategoriesScreen />;
-    // return <SettingsScreen />;
+    return (
+      <React.Fragment>
+        <StatusBar barStyle="light-content" />
+        <AppNavigator />
+      </React.Fragment>
+    );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#F5FCFF"
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: "center",
-    margin: 10
-  },
-  instructions: {
-    textAlign: "center",
-    color: "#333333",
-    marginBottom: 5
-  }
-});
