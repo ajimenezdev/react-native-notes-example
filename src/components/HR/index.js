@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
+import withColors from "ReactNativeNotas/src/components/withColors";
 
-const HR = ({ size, color }) => (
+const HR = ({ size, color, colors }) => (
   <View
     style={{
-      borderBottomColor: color || "#666",
+      borderBottomColor: color || colors.secondary,
       borderBottomWidth: 1,
       margin: 10,
       width: size || "90%"
@@ -12,4 +13,4 @@ const HR = ({ size, color }) => (
   />
 );
 
-export default HR;
+export default withColors(HR);

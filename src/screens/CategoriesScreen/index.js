@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { HR, ColorPicker, ColorView } from "ReactNativeNotas/src/components";
+import withColors from "ReactNativeNotas/src/components/withColors";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import CategoryItem from "./CategoryItem";
 
@@ -55,11 +56,10 @@ class CategoriesScreen extends Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
       modalVisible: false,
       itemSelected: null,
-      newColor: "#B9FFC9"
+      newColor: props.colors.categoryColors[0]
     };
   }
 
@@ -95,7 +95,7 @@ class CategoriesScreen extends Component {
           renderItem={({ item }) => (
             <CategoryItem item={item} openChangeColor={this.openChangeColor} />
           )}
-          ItemSeparatorComponent={() => <HR color="#aaa" size="100%" />}
+          ItemSeparatorComponent={() => <HR size="100%" />}
         />
         <ColorPicker
           visible={modalVisible}
@@ -107,4 +107,4 @@ class CategoriesScreen extends Component {
   }
 }
 
-export default CategoriesScreen;
+export default withColors(CategoriesScreen);

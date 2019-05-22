@@ -1,10 +1,8 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import withColors from "../withColors";
 
 const size = 50;
-const primaryColor = "#0066ff";
-const secondaryColor = "#ccc";
-const accentColor = "#00bfa5";
 
 const styles = StyleSheet.create({
   fabContainer: {
@@ -37,6 +35,7 @@ const FAB = props => {
     primary,
     secondary,
     accent,
+    colors,
     ...otherProps
   } = props;
   return (
@@ -46,9 +45,9 @@ const FAB = props => {
         style,
         {
           backgroundColor:
-            (primary && primaryColor) ||
-            (secondary && secondaryColor) ||
-            (accent && accentColor) ||
+            (primary && colors.primary) ||
+            (secondary && colors.secondary) ||
+            (accent && colors.accent) ||
             primaryColor
         }
       ]}
@@ -60,4 +59,4 @@ const FAB = props => {
   );
 };
 
-export default FAB;
+export default withColors(FAB);

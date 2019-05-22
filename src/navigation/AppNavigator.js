@@ -17,13 +17,14 @@ import {
   SettingsTab3
 } from "ReactNativeNotas/src/screens";
 import CustomDrawer from "./CustomDrawer";
+import { colors } from "ReactNativeNotas/src/components/withColors";
 
 const headerConfig = {
   defaultNavigationOptions: {
     headerStyle: {
-      backgroundColor: "#0066ff"
+      backgroundColor: colors.primary
     },
-    headerTintColor: "#fff",
+    headerTintColor: colors.primaryTextContrast,
     headerTitleStyle: {
       fontWeight: "bold"
     }
@@ -60,7 +61,7 @@ export default createAppContainer(
               },
               tabBarOptions: {
                 style: {
-                  backgroundColor: "#0066ff",
+                  backgroundColor: colors.primary,
                   elevation: 0
                 }
               }

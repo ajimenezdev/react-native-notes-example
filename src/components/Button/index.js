@@ -1,19 +1,16 @@
 import React from "react";
 import { Button } from "react-native";
+import withColors from "../withColors";
 
-const primaryColor = "#0066ff";
-const secondaryColor = "#ccc";
-const accentColor = "#00bfa5";
-
-const CustomButton = ({ primary, secondary, accent, ...props }) => (
+const CustomButton = ({ primary, secondary, accent, colors, ...props }) => (
   <Button
     color={
-      (primary && primaryColor) ||
-      (secondary && secondaryColor) ||
-      (accent && accentColor)
+      (primary && colors.primary) ||
+      (secondary && colors.secondary) ||
+      (accent && colors.accent)
     }
     {...props}
   />
 );
 
-export default CustomButton;
+export default withColors(CustomButton);

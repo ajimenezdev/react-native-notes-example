@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { colors } from "ReactNativeNotas/src/components/withColors";
 
 const styles = StyleSheet.create({
   container: {
@@ -12,11 +13,11 @@ const styles = StyleSheet.create({
     margin: 20
   },
   paper: {
-    backgroundColor: "#fff",
+    backgroundColor: colors.backgroundColor,
     padding: 5,
     margin: 5,
     elevation: 3,
-    shadowColor: "#000",
+    shadowColor: colors.shadowColor,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2
