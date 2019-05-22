@@ -10,13 +10,11 @@ import {
 } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { HR, ColorPicker } from "ReactNativeNotas/src/components";
+import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import CategoryItem from "./CategoryItem";
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "flex-start",
-    marginTop: 50
-  },
+  container: {},
   row: {
     width: "90%",
     flexDirection: "row",
@@ -56,6 +54,11 @@ const categories = [
 ];
 
 class CategoriesScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: "Categorías",
+    headerLeft: <DrawerHeaderButton navigation={navigation} />
+  });
+
   constructor(props) {
     super(props);
 
@@ -83,7 +86,6 @@ class CategoriesScreen extends Component {
     const { modalVisible, itemSelected, newColor } = this.state;
     return (
       <View style={[basicStyles.container, styles.container]}>
-        <Text style={basicStyles.title}>Categorías</Text>
         <View style={styles.row}>
           <TextInput style={styles.addInput} placeholder="Nueva categoría" />
           <TouchableOpacity onPress={() => this.openChangeColor(null)}>

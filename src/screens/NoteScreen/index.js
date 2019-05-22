@@ -11,8 +11,7 @@ import { HR, CategoryPicker } from "ReactNativeNotas/src/components";
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: "flex-start",
-    marginTop: 50
+    justifyContent: "flex-start"
   },
   input: {
     width: "90%"
@@ -45,6 +44,10 @@ const styles = StyleSheet.create({
 });
 
 class NoteScreen extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: navigation.state.params.title
+  });
+
   constructor(props) {
     super(props);
 
@@ -70,10 +73,9 @@ class NoteScreen extends Component {
 
   render() {
     const { note, modalVisible } = this.state;
-    const { title, text, created, category } = note;
+    const { title, text, created, category } = note || {};
     return (
       <View style={[basicStyles.container, styles.container]}>
-        <Text style={basicStyles.title}>Crear Nota</Text>
         <View style={styles.timestamp}>
           {created && (
             <Text>
