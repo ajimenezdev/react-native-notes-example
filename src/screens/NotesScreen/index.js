@@ -18,28 +18,40 @@ const notas = [
     id: 1,
     title: "Nota 1",
     text: "Contenido nota 1",
-    category: "#FFB3BA",
+    category: {
+      category: "Personal",
+      color: "#FFB3BA"
+    },
     created: new Date()
   },
   {
     id: 2,
     title: "Nota 2",
     text: "Contenido nota 2",
-    category: "#FFDEB9",
+    category: {
+      category: "Trabajo",
+      color: "#FFDEB9"
+    },
     created: new Date()
   },
   {
     id: 3,
     title: "Nota 3",
     text: "Contenido nota 3",
-    category: "#B9FFC9",
+    category: {
+      category: "Casa",
+      color: "#FFFFB9"
+    },
     created: new Date()
   },
   {
     id: 4,
     title: "Nota 4",
     text: "Contenido nota 4",
-    category: "#BAE0FF",
+    category: {
+      category: "Viaje",
+      color: "#BAE0FF"
+    },
     created: new Date()
   },
   {
@@ -58,6 +70,12 @@ const notas = [
 ];
 
 class NotesScreen extends Component {
+  openNote = note => {
+    this.props.navigation.navigate("Note", {
+      note: note
+    });
+  };
+
   render() {
     return (
       <View style={[basicStyles.container, styles.container]}>
@@ -67,9 +85,11 @@ class NotesScreen extends Component {
           data={notas}
           keyExtractor={item => item.id}
           numColumns={2}
-          renderItem={({ item }) => <NoteGridItem note={item} />}
+          renderItem={({ item }) => (
+            <NoteGridItem note={item} onPress={this.openNote} />
+          )}
         />
-        <FAB text="+" />
+        <FAB text="+" onPress={this.openNote} />
       </View>
     );
   }

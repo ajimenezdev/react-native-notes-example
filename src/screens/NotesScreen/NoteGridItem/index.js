@@ -20,9 +20,9 @@ const NoteGridItem = ({ note, onPress }) => {
       style={[
         basicStyles.paper,
         styles.container,
-        { backgroundColor: category || "white" }
+        { backgroundColor: (category && category.color) || "white" }
       ]}
-      onPress={onPress}
+      onPress={() => onPress(note)}
     >
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.text} numberOfLines={5}>
