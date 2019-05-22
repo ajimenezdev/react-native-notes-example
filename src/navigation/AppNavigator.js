@@ -2,14 +2,19 @@ import React from "react";
 import {
   createAppContainer,
   createStackNavigator,
-  createDrawerNavigator
+  createDrawerNavigator,
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
 } from "react-navigation";
 
 import {
   NotesScreen,
   NoteScreen,
   CategoriesScreen,
-  SettingsScreen
+  SettingsScreen,
+  SettingsTab1,
+  SettingsTab2,
+  SettingsTab3
 } from "ReactNativeNotas/src/screens";
 import CustomDrawer from "./CustomDrawer";
 
@@ -41,7 +46,38 @@ export default createAppContainer(
         },
         headerConfig
       ),
-      Ajustes: SettingsScreen
+      Ajustes: createStackNavigator(
+        {
+          tab: createMaterialTopTabNavigator(
+            {
+              tab1: SettingsTab1,
+              tab2: SettingsTab2,
+              tab3: SettingsTab3
+            },
+            {
+              navigationOptions: {
+                title: "Ajustes"
+              },
+              tabBarOptions: {
+                style: {
+                  backgroundColor: "#0066ff",
+                  elevation: 0
+                }
+              }
+            }
+          )
+        },
+        {
+          ...headerConfig,
+          defaultNavigationOptions: {
+            ...headerConfig.defaultNavigationOptions,
+            headerStyle: {
+              ...headerConfig.defaultNavigationOptions.headerStyle,
+              elevation: 0
+            }
+          }
+        }
+      )
     },
     {
       contentComponent: props => <CustomDrawer {...props} />

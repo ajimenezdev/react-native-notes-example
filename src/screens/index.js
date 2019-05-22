@@ -2,5 +2,16 @@ import NotesScreen from "./NotesScreen";
 import NoteScreen from "./NoteScreen";
 import CategoriesScreen from "./CategoriesScreen";
 import SettingsScreen from "./SettingsScreen";
+import SettingsTab1 from "./SettingsScreen/SettingsTab1";
+import SettingsTab2 from "./SettingsScreen/SettingsTab2";
+import SettingsTab3 from "./SettingsScreen/SettingsTab3";
 
-export { NotesScreen, NoteScreen, CategoriesScreen, SettingsScreen };
+export {
+  NotesScreen,
+  NoteScreen,
+  CategoriesScreen,
+  SettingsScreen,
+  SettingsTab1,
+  SettingsTab2,
+  SettingsTab3
+};
