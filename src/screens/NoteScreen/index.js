@@ -7,7 +7,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
-import { HR, CategoryPicker } from "ReactNativeNotas/src/components";
+import { HR, CategoryPicker, ColorView } from "ReactNativeNotas/src/components";
 
 const styles = StyleSheet.create({
   container: {
@@ -34,12 +34,6 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     flexDirection: "row",
     alignItems: "center"
-  },
-  colorView: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    margin: 5
   }
 });
 
@@ -104,9 +98,7 @@ class NoteScreen extends Component {
         >
           {category && (
             <React.Fragment>
-              <View
-                style={[styles.colorView, { backgroundColor: category.color }]}
-              />
+              <ColorView color={category.color} />
               <Text>{category.category}</Text>
             </React.Fragment>
           )}

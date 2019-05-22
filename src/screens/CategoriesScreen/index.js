@@ -9,7 +9,7 @@ import {
   TouchableOpacity
 } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
-import { HR, ColorPicker } from "ReactNativeNotas/src/components";
+import { HR, ColorPicker, ColorView } from "ReactNativeNotas/src/components";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import CategoryItem from "./CategoryItem";
 
@@ -26,12 +26,6 @@ const styles = StyleSheet.create({
   },
   addInput: {
     flex: 1
-  },
-  colorView: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    margin: 5
   }
 });
 
@@ -89,7 +83,7 @@ class CategoriesScreen extends Component {
         <View style={styles.row}>
           <TextInput style={styles.addInput} placeholder="Nueva categoría" />
           <TouchableOpacity onPress={() => this.openChangeColor(null)}>
-            <View style={[styles.colorView, { backgroundColor: newColor }]} />
+            <ColorView color={newColor} />
           </TouchableOpacity>
           <Button title="+" />
         </View>

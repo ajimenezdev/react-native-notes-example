@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, View, Modal, StyleSheet, TouchableOpacity } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
-
+import ColorView from "../ColorView";
 const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
@@ -16,12 +16,6 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "bold",
     fontSize: 16
-  },
-  colorView: {
-    width: 30,
-    height: 30,
-    borderRadius: 15,
-    margin: 5
   },
   row: {
     flexDirection: "row",
@@ -68,9 +62,7 @@ const CategoryPicker = ({
             style={styles.row}
             onPress={() => onChange(category)}
           >
-            <View
-              style={[styles.colorView, { backgroundColor: category.color }]}
-            />
+            <ColorView color={category.color} />
             <Text>{category.category}</Text>
           </TouchableOpacity>
         ))}
