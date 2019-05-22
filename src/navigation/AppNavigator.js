@@ -9,24 +9,10 @@ import {
 } from "ReactNativeNotas/src/screens";
 
 export default createAppContainer(
-  createStackNavigator(
-    {
-      Notes: NotesScreen,
-      Note: NoteScreen,
-      Categories: CategoriesScreen,
-      Settings: SettingsScreen
-    },
-    {
-      initialRouteName: "Notes",
-      defaultNavigationOptions: {
-        headerStyle: {
-          backgroundColor: "#0066ff"
-        },
-        headerTintColor: "#fff",
-        headerTitleStyle: {
-          fontWeight: "bold"
-        }
-      }
-    }
-  )
+  createStackNavigator({
+    Notes: NotesScreen,
+    Note: NoteScreen,
+    Categories: CategoriesScreen,
+    Settings: SettingsScreen
+  })
 );
