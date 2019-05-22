@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { HR, CategoryPicker, ColorView } from "ReactNativeNotas/src/components";
+import Button from "ReactNativeNotas/src/components/Button";
 
 const styles = StyleSheet.create({
   container: {
@@ -104,6 +105,7 @@ class NoteScreen extends Component {
           )}
           {!category && <Text>Elige categoría</Text>}
         </TouchableOpacity>
+        <Button accent title="Guardar" />
         <CategoryPicker
           visible={modalVisible}
           onChange={this.handleChangeColor}

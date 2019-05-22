@@ -2,6 +2,9 @@ import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
 const size = 50;
+const primaryColor = "#0066ff";
+const secondaryColor = "#ccc";
+const accentColor = "#00bfa5";
 
 const styles = StyleSheet.create({
   fabContainer: {
@@ -10,7 +13,6 @@ const styles = StyleSheet.create({
     borderRadius: size / 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#0000ff",
     shadowOffset: { width: 1, height: 3 },
     shadowColor: "black",
     shadowOpacity: 0.5,
@@ -27,9 +29,31 @@ const styles = StyleSheet.create({
 });
 
 const FAB = props => {
-  const { style, textStyle, text, children, ...otherProps } = props;
+  const {
+    style,
+    textStyle,
+    text,
+    children,
+    primary,
+    secondary,
+    accent,
+    ...otherProps
+  } = props;
   return (
-    <TouchableOpacity style={[styles.fabContainer, style]} {...otherProps}>
+    <TouchableOpacity
+      style={[
+        styles.fabContainer,
+        style,
+        {
+          backgroundColor:
+            (primary && primaryColor) ||
+            (secondary && secondaryColor) ||
+            (accent && accentColor) ||
+            primaryColor
+        }
+      ]}
+      {...otherProps}
+    >
       {text && <Text style={styles.fabText}>{text}</Text>}
       {!text && children}
     </TouchableOpacity>

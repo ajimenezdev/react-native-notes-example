@@ -93,7 +93,7 @@ class NotesScreen extends Component {
             <NoteGridItem note={item} onPress={this.openNote} />
           )}
         />
-        <FAB text="+" onPress={() => this.openNote(null)} />
+        <FAB accent text="+" onPress={() => this.openNote(null)} />
       </View>
     );
   }
