@@ -13,8 +13,8 @@ const styles = StyleSheet.create({
   text: {}
 });
 
-const NoteGridItem = ({ note, onPress }) => {
-  const { title, text, category } = note;
+const NoteGridItem = ({ note, category, onPress }) => {
+  const { title, text } = note;
   return (
     <TouchableOpacity
       style={[

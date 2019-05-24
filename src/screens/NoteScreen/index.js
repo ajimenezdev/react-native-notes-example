@@ -63,9 +63,9 @@ class NoteScreen extends Component {
     this.setState({ modalVisible: !this.state.modalVisible });
   };
 
-  handleChangeColor = category => {
+  handleChangeCategory = category => {
     this.setState({ modalVisible: false });
-    this.updateNoteState({ category });
+    this.updateNoteState({ categoryId: category.id });
   };
 
   updateNoteState = property => {
@@ -88,15 +88,21 @@ class NoteScreen extends Component {
     this.props.navigation.goBack();
   };
 
+  getCategory = categoryId =>
+    this.props.categories.find(c => c.id === categoryId);
+
   render() {
     const { note, modalVisible } = this.state;
-    const { id, title, text, created, category } = note || {};
+    const { id, title, text, created, categoryId } = note || {};
+    console.log("test:created", note);
+    const category = this.getCategory(categoryId);
     return (
       <View style={[basicStyles.container, styles.container]}>
         <View style={styles.timestamp}>
           {created && (
             <Text>
-              {created.toLocaleTimeString()} - {created.toLocaleDateString()}
+              {new Date(created).toLocaleTimeString()} -{" "}
+              {new Date(created).toLocaleDateString()}
             </Text>
           )}
         </View>
@@ -131,7 +137,7 @@ class NoteScreen extends Component {
         {id && <Button secondary title="Borrar" onPress={this.removeNote} />}
         <CategoryPicker
           visible={modalVisible}
-          onChange={this.handleChangeColor}
+          onChange={this.handleChangeCategory}
           onRequestClose={this.toggleCategoryPicker}
         />
       </View>
@@ -140,7 +146,9 @@ class NoteScreen extends Component {
 }
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    categories: state.categories
+  };
 };
 
 const mapDispatchToProps = dispatch => {
