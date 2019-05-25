@@ -289,3 +289,6 @@ buck-out/
 .history
 
 # End of https://www.gitignore.io/api/macos,reactnative,visualstudiocode
+
+##CocoaPods
+ios/Pods
