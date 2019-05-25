@@ -1,5 +1,6 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
+import { Text } from "ReactNativeNotas/src/components";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
 
 const styles = StyleSheet.create({

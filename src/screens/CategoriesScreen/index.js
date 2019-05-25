@@ -1,9 +1,7 @@
 import React, { Component } from "react";
 import {
-  Text,
   View,
   StyleSheet,
-  TextInput,
   Button,
   FlatList,
   TouchableOpacity,
@@ -12,7 +10,13 @@ import {
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
-import { HR, ColorPicker, ColorView } from "ReactNativeNotas/src/components";
+import {
+  HR,
+  ColorPicker,
+  ColorView,
+  Text,
+  TextInput
+} from "ReactNativeNotas/src/components";
 import withColors from "ReactNativeNotas/src/components/withColors";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import {
@@ -23,15 +27,15 @@ import {
 import CategoryItem from "./CategoryItem";
 
 const styles = StyleSheet.create({
-  container: {},
   row: {
-    width: "90%",
+    width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center"
   },
   list: {
-    width: "100%"
+    width: "100%",
+    paddingTop: 10
   },
   addInput: {
     flex: 1
@@ -121,7 +125,7 @@ class CategoriesScreen extends Component {
     const { modalVisible, itemSelected, newCategory } = this.state;
     return (
       <View style={[basicStyles.container, styles.container]}>
-        <View style={styles.row}>
+        <View style={[styles.row, basicStyles.paper]}>
           <TextInput
             style={styles.addInput}
             placeholder="Nueva categoría"
@@ -133,7 +137,6 @@ class CategoriesScreen extends Component {
           </TouchableOpacity>
           <Button title="+" onPress={this.addCategory} />
         </View>
-        <HR />
         <FlatList
           style={styles.list}
           data={categories}

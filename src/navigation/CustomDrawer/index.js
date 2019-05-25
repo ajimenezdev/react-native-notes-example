@@ -1,13 +1,8 @@
 import React from "react";
-import {
-  Text,
-  View,
-  ScrollView,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { DrawerItems } from "react-navigation";
 import firebase from "react-native-firebase";
+import { Text } from "ReactNativeNotas/src/components";
 
 const styles = StyleSheet.create({
   header: {

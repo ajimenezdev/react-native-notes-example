@@ -1,6 +1,7 @@
 import React from "react";
-import { Text, TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet } from "react-native";
 import withColors from "../withColors";
+import Text from "../Text";
 
 const size = 50;
 
