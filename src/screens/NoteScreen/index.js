@@ -94,7 +94,6 @@ class NoteScreen extends Component {
   render() {
     const { note, modalVisible } = this.state;
     const { id, title, text, created, categoryId } = note || {};
-    console.log("test:created", note);
     const category = this.getCategory(categoryId);
     return (
       <View style={[basicStyles.container, styles.container]}>
