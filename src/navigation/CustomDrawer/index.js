@@ -12,7 +12,8 @@ import firebase from "react-native-firebase";
 const styles = StyleSheet.create({
   header: {
     backgroundColor: "#ddd",
-    padding: 10
+    padding: 10,
+    paddingTop: 40
   },
   headerFooterText: {
     fontSize: 18,
@@ -23,7 +24,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     backgroundColor: "#ddd",
-    padding: 10
+    padding: 10,
+    paddingBottom: 40
   }
 });
 

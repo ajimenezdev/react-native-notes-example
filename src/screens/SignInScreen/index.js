@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "bold",
-    margin: 30
+    margin: 50
   },
   inputs: {
     justifyContent: "center",
@@ -33,6 +33,9 @@ const styles = StyleSheet.create({
   button: {
     width: 150,
     margin: 5
+  },
+  errorMessage: {
+    color: "red"
   }
 });
 
@@ -89,6 +92,7 @@ class SignInScreen extends Component {
             clearButtonMode="always"
             autoCorrect={false}
             onChangeText={email => this.setState({ email })}
+            autoCapitalize="none"
           />
           <TextInput
             style={styles.input}
@@ -98,6 +102,7 @@ class SignInScreen extends Component {
             clearButtonMode="always"
             autoCorrect={false}
             onChangeText={password => this.setState({ password })}
+            autoCapitalize="none"
           />
 
           {signup && (
@@ -111,9 +116,12 @@ class SignInScreen extends Component {
               onChangeText={passwordConfirm =>
                 this.setState({ passwordConfirm })
               }
+              autoCapitalize="none"
             />
           )}
-          {errorMessage && <Text>{errorMessage}</Text>}
+          {errorMessage && (
+            <Text style={styles.errorMessage}>{errorMessage}</Text>
+          )}
         </View>
         {!signup && (
           <View style={styles.buttons}>

@@ -89,7 +89,13 @@ const AppStack = createAppContainer(
   )
 );
 
-const AuthStack = createStackNavigator({ SignIn: SignInScreen });
+const AuthStack = createStackNavigator(
+  { SignIn: SignInScreen },
+  {
+    mode: "modal",
+    headerMode: "none"
+  }
+);
 
 export default createAppContainer(
   createSwitchNavigator(
