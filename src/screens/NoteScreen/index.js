@@ -133,7 +133,7 @@ class NoteScreen extends Component {
           >
             {category && (
               <React.Fragment>
-                <ColorView color={category.color} />
+                <ColorView color={colors.categoryColors[category.colorIdx]} />
                 <Text>{category.category}</Text>
               </React.Fragment>
             )}

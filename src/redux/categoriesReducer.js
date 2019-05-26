@@ -7,17 +7,17 @@ const defaultState = [
   {
     id: uuid(),
     category: "Personal",
-    color: "#FFB3BA"
+    colorIdx: 0
   },
   {
     id: uuid(),
     category: "Trabajo",
-    color: "#B9FFC9"
+    colorIdx: 1
   },
   {
     id: uuid(),
     category: "Casa",
-    color: "#FFFFB9"
+    colorIdx: 2
   }
 ];
 

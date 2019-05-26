@@ -24,7 +24,8 @@ const NoteGridItem = ({ note, category, onPress, colors }) => {
         styles.container,
         {
           backgroundColor:
-            (category && category.color) || colors.backgroundContent
+            (category && colors.categoryColors[category.colorIdx]) ||
+            colors.backgroundContent
         }
       ]}
       onPress={() => onPress(note)}

@@ -53,7 +53,7 @@ const CategoryPicker = ({
               style={styles.row}
               onPress={() => onChange(category)}
             >
-              <ColorView color={category.color} />
+              <ColorView color={colors.categoryColors[category.colorIdx]} />
               <Text>{category.category}</Text>
             </TouchableOpacity>
           ))}

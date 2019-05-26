@@ -27,11 +27,11 @@ const CategoryItem = ({
   onRemove,
   colors
 }) => {
-  const { category, color } = item;
+  const { category, colorIdx } = item;
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => openChangeColor(item)}>
-        <ColorView color={color} />
+        <ColorView color={colors.categoryColors[colorIdx]} />
       </TouchableOpacity>
       <TextInput
         style={styles.text}

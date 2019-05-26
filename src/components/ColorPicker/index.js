@@ -30,6 +30,12 @@ const ColorPicker = ({
   colors
 }) => {
   const basicStyles = getBasicStyles(colors);
+
+  handleChangeColor = color => {
+    const colorIdx = colors.categoryColors.findIndex(c => c === color);
+    onChange(colorIdx);
+  };
+
   return (
     <Modal
       animationType="fade"
@@ -40,7 +46,7 @@ const ColorPicker = ({
       <View style={styles.container}>
         <View style={[basicStyles.paper, styles.content]}>
           <ColorPalette
-            onChange={onChange}
+            onChange={handleChangeColor}
             defaultColor={selectedColor || ""}
             colors={colors.categoryColors}
             title={<Text style={styles.title}>Elige el color:</Text>}

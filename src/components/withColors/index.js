@@ -31,7 +31,7 @@ export const colorsDark = {
   placeHolder: "#aaa",
   headerText: "#fff",
 
-  categoryColors: ["#FFB3BA", "#FFDEB9", "#FFFFB9", "#B9FFC9", "#BAE0FF"]
+  categoryColors: ["#ed4e5b", "#ffa94f", "#bcbc51", "#45f76b", "#6dc0ff"]
 };
 
 const withColors = Element => ({ styleSettingsHOC, ...props }) => (
