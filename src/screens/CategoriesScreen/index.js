@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import {
   HR,
   ColorPicker,
@@ -121,7 +121,8 @@ class CategoriesScreen extends Component {
   };
 
   render() {
-    const { categories } = this.props;
+    const { categories, colors } = this.props;
+    const basicStyles = getBasicStyles(colors);
     const { modalVisible, itemSelected, newCategory } = this.state;
     return (
       <View style={[basicStyles.container, styles.container]}>

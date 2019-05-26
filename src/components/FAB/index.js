@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     right: 20
   },
   fabText: {
-    color: "#fff",
     fontWeight: "bold"
   }
 });
@@ -54,7 +53,11 @@ const FAB = props => {
       ]}
       {...otherProps}
     >
-      {text && <Text style={styles.fabText}>{text}</Text>}
+      {text && (
+        <Text style={[{ color: colors.primaryTextContrast }, styles.fabText]}>
+          {text}
+        </Text>
+      )}
       {!text && children}
     </TouchableOpacity>
   );

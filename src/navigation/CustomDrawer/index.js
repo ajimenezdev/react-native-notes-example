@@ -3,26 +3,29 @@ import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
 import { DrawerItems } from "react-navigation";
 import firebase from "react-native-firebase";
 import { Text } from "ReactNativeNotas/src/components";
+import withColors from "ReactNativeNotas/src/components/withColors";
 
-const styles = StyleSheet.create({
-  header: {
-    backgroundColor: "#ddd",
-    padding: 10,
-    paddingTop: 40
-  },
-  headerFooterText: {
-    fontSize: 18,
-    fontWeight: "bold"
-  },
-  items: {
-    flex: 1
-  },
-  footer: {
-    backgroundColor: "#ddd",
-    padding: 10,
-    paddingBottom: 40
-  }
-});
+const getStyles = colors =>
+  StyleSheet.create({
+    header: {
+      backgroundColor: colors.primary,
+      padding: 10,
+      paddingTop: 40
+    },
+    headerFooterText: {
+      fontSize: 18,
+      fontWeight: "bold"
+    },
+    items: {
+      flex: 1,
+      backgroundColor: colors.background
+    },
+    footer: {
+      backgroundColor: colors.primary,
+      padding: 10,
+      paddingBottom: 40
+    }
+  });
 
 class CustomDrawer extends React.Component {
   constructor(props) {
@@ -39,6 +42,8 @@ class CustomDrawer extends React.Component {
   }
 
   render() {
+    const { colors } = this.props;
+    const styles = getStyles(colors);
     const { currentUser } = this.state;
     return (
       <ScrollView contentContainerStyle={{ flex: 1 }}>
@@ -48,7 +53,13 @@ class CustomDrawer extends React.Component {
           </Text>
         </View>
         <View style={styles.items}>
-          <DrawerItems style={{ flex: 1 }} {...this.props} />
+          <DrawerItems
+            style={{ flex: 1 }}
+            labelStyle={{ color: colors.placeHolder }}
+            activeLabelStyle={{ color: colors.text }}
+            activeBackgroundColor={colors.backgroundContent}
+            {...this.props}
+          />
         </View>
         <TouchableOpacity
           style={styles.footer}
@@ -61,4 +72,4 @@ class CustomDrawer extends React.Component {
   }
 }
 
-export default CustomDrawer;
+export default withColors(CustomDrawer);

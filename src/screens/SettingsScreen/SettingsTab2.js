@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import withColors from "ReactNativeNotas/src/components/withColors";
 import { Text } from "ReactNativeNotas/src/components";
 
 class SettingsScreen extends Component {
   render() {
+    const { colors } = this.props;
+    const basicStyles = getBasicStyles(colors);
     return (
       <View style={basicStyles.container}>
         <Text> Pantalla Ajustes Tab 2</Text>
@@ -13,4 +16,4 @@ class SettingsScreen extends Component {
   }
 }
 
-export default SettingsScreen;
+export default withColors(SettingsScreen);

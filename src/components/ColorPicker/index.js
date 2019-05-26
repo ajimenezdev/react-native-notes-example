@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Modal, StyleSheet } from "react-native";
 import ColorPalette from "react-native-color-palette";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { Text } from "ReactNativeNotas/src/components";
 import withColors from "ReactNativeNotas/src/components/withColors";
 
@@ -28,29 +28,32 @@ const ColorPicker = ({
   visible,
   onRequestClose,
   colors
-}) => (
-  <Modal
-    animationType="fade"
-    transparent={true}
-    visible={visible}
-    onRequestClose={onRequestClose}
-  >
-    <View style={styles.container}>
-      <View style={[basicStyles.paper, styles.content]}>
-        <ColorPalette
-          onChange={onChange}
-          defaultColor={selectedColor || ""}
-          colors={colors.categoryColors}
-          title={<Text style={styles.title}>Elige el color:</Text>}
-          // icon={}
-          paletteStyles={{
-            justifyContent: "center",
-            alignItems: "center"
-          }}
-        />
+}) => {
+  const basicStyles = getBasicStyles(colors);
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onRequestClose}
+    >
+      <View style={styles.container}>
+        <View style={[basicStyles.paper, styles.content]}>
+          <ColorPalette
+            onChange={onChange}
+            defaultColor={selectedColor || ""}
+            colors={colors.categoryColors}
+            title={<Text style={styles.title}>Elige el color:</Text>}
+            // icon={}
+            paletteStyles={{
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          />
+        </View>
       </View>
-    </View>
-  </Modal>
-);
+    </Modal>
+  );
+};
 
 export default withColors(ColorPicker);

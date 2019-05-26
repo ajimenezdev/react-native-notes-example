@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { FAB, Text } from "ReactNativeNotas/src/components/";
+import withColors from "ReactNativeNotas/src/components/withColors";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import NoteGridItem from "./NoteGridItem";
 
@@ -38,7 +39,8 @@ class NotesScreen extends Component {
     this.props.categories.find(c => c.id === categoryId);
 
   render() {
-    const { notes } = this.props;
+    const { notes, colors } = this.props;
+    const basicStyles = getBasicStyles(colors);
     return (
       <View style={basicStyles.container}>
         <FlatList
@@ -81,4 +83,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NotesScreen);
+)(withColors(NotesScreen));
