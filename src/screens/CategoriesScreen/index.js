@@ -49,11 +49,6 @@ const categories = [
 ];
 
 class CategoriesScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Categorías",
-    headerLeft: <DrawerHeaderButton navigation={navigation} />
-  });
-
   constructor(props) {
     super(props);
     this.state = {
@@ -107,4 +102,11 @@ class CategoriesScreen extends Component {
   }
 }
 
-export default withColors(CategoriesScreen);
+const CategoriesScreenWC = withColors(CategoriesScreen);
+
+CategoriesScreenWC.navigationOptions = ({ navigation }) => ({
+  title: "Categorías",
+  headerLeft: <DrawerHeaderButton navigation={navigation} />
+});
+
+export default CategoriesScreenWC;
