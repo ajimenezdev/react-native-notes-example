@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { TouchableOpacity, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  StyleSheet,
+  View,
+  Animated,
+  Easing
+} from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
@@ -28,7 +34,8 @@ class NoteGridItem extends Component {
     super(props);
 
     this.state = {
-      isMenuOpen: false
+      isMenuOpen: false,
+      scaleAnim: new Animated.Value(1)
     };
   }
 
@@ -38,46 +45,60 @@ class NoteGridItem extends Component {
   };
 
   deleteFromMenu = note => {
-    this.props.removeNote(note.id);
+    this.setState({ isMenuOpen: false });
+    Animated.timing(this.state.scaleAnim, {
+      toValue: 0,
+      duration: 500,
+      easing: Easing.inOut(Easing.cubic)
+    }).start(() => this.props.removeNote(note.id));
   };
 
   render() {
     const { note, category, onPress, colors } = this.props;
     const { title, text } = note;
     const basicStyles = getBasicStyles(colors);
-    const { isMenuOpen } = this.state;
+    const { isMenuOpen, scaleAnim } = this.state;
     return (
-      <TouchableOpacity
+      <Animated.View
         style={[
-          basicStyles.paper,
           styles.container,
           {
-            backgroundColor:
-              (category && colors.categoryColors[category.colorIdx]) ||
-              colors.backgroundContent
+            transform: [{ scale: scaleAnim }]
           }
         ]}
-        onPress={() => onPress(note)}
-        onLongPress={() => this.setState({ isMenuOpen: true })}
       >
-        <Menu opened={isMenuOpen}>
-          <MenuTrigger />
-          <MenuOptions opened={isMenuOpen}>
-            <MenuOption
-              triggerOnLongPress
-              onSelect={() => this.editFromMenu(note)}
-              text={"Editar"}
-            />
-            <View style={styles.divider} />
-            <MenuOption
-              onSelect={() => this.deleteFromMenu(note)}
-              text="Borrar"
-            />
-          </MenuOptions>
-        </Menu>
-        <Text style={styles.title}>{title}</Text>
-        <Text numberOfLines={5}>{text}</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[
+            basicStyles.paper,
+            { flex: 1 },
+            {
+              backgroundColor:
+                (category && colors.categoryColors[category.colorIdx]) ||
+                colors.backgroundContent
+            }
+          ]}
+          onPress={() => onPress(note)}
+          onLongPress={() => this.setState({ isMenuOpen: true })}
+        >
+          <Menu opened={isMenuOpen}>
+            <MenuTrigger />
+            <MenuOptions opened={isMenuOpen}>
+              <MenuOption
+                triggerOnLongPress
+                onSelect={() => this.editFromMenu(note)}
+                text={"Editar"}
+              />
+              <View style={styles.divider} />
+              <MenuOption
+                onSelect={() => this.deleteFromMenu(note)}
+                text="Borrar"
+              />
+            </MenuOptions>
+          </Menu>
+          <Text style={styles.title}>{title}</Text>
+          <Text numberOfLines={5}>{text}</Text>
+        </TouchableOpacity>
+      </Animated.View>
     );
   }
 }
