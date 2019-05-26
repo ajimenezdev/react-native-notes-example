@@ -23,29 +23,15 @@ const styles = StyleSheet.create({
   }
 });
 
-const categories = [
-  {
-    id: 1,
-    category: "Personal",
-    color: "#FFB3BA"
-  },
-  {
-    id: 2,
-    category: "Trabajo",
-    color: "#FFDEB9"
-  },
-  {
-    id: 3,
-    category: "Casa",
-    color: "#FFFFB9"
-  }
-];
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 
 const CategoryPicker = ({
   selectedCategory,
   onChange,
   visible,
-  onRequestClose
+  onRequestClose,
+  categories
 }) => (
   <Modal
     animationType="fade"
@@ -71,4 +57,10 @@ const CategoryPicker = ({
   </Modal>
 );
 
-export default CategoryPicker;
+const mapStateToProps = state => {
+  return {
+    categories: state.categories
+  };
+};
+
+export default connect(mapStateToProps)(CategoryPicker);

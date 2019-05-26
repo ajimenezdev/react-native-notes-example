@@ -6,9 +6,16 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { HR, CategoryPicker, ColorView } from "ReactNativeNotas/src/components";
 import Button from "ReactNativeNotas/src/components/Button";
+import {
+  addNote,
+  updateNote,
+  removeNote
+} from "ReactNativeNotas/src/redux/notesReducer";
 
 const styles = StyleSheet.create({
   container: {
@@ -66,9 +73,24 @@ class NoteScreen extends Component {
     this.setState({ note: newNote });
   };
 
+  saveNote = () => {
+    const { note } = this.state;
+    if (note.id) {
+      this.props.updateNote(note);
+    } else {
+      const resp = this.props.addNote(note);
+    }
+    this.props.navigation.goBack();
+  };
+
+  removeNote = () => {
+    this.props.removeNote(this.state.note.id);
+    this.props.navigation.goBack();
+  };
+
   render() {
     const { note, modalVisible } = this.state;
-    const { title, text, created, category } = note || {};
+    const { id, title, text, created, category } = note || {};
     return (
       <View style={[basicStyles.container, styles.container]}>
         <View style={styles.timestamp}>
@@ -105,7 +127,8 @@ class NoteScreen extends Component {
           )}
           {!category && <Text>Elige categoría</Text>}
         </TouchableOpacity>
-        <Button accent title="Guardar" />
+        <Button accent title="Guardar" onPress={this.saveNote} />
+        {id && <Button secondary title="Borrar" onPress={this.removeNote} />}
         <CategoryPicker
           visible={modalVisible}
           onChange={this.handleChangeColor}
@@ -116,4 +139,22 @@ class NoteScreen extends Component {
   }
 }
 
-export default NoteScreen;
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      addNote,
+      updateNote,
+      removeNote
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NoteScreen);

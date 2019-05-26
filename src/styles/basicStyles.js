@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     margin: 20
   },
   paper: {
-    backgroundColor: colors.backgroundColor,
+    backgroundColor: colors.background,
     padding: 5,
     margin: 5,
     elevation: 3,

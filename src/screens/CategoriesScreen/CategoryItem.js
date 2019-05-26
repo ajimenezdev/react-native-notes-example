@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   TextInput
 } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ColorView } from "ReactNativeNotas/src/components";
 
@@ -24,19 +26,36 @@ const styles = StyleSheet.create({
   }
 });
 
-const CategoryItem = ({ item, openChangeColor }) => {
+const CategoryItem = ({ item, openChangeColor, onChangeText, onRemove }) => {
   const { category, color } = item;
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => openChangeColor(item)}>
         <ColorView color={color} />
       </TouchableOpacity>
-      <TextInput style={styles.text} value={category} />
+      <TextInput
+        style={styles.text}
+        value={category}
+        onChangeText={onChangeText}
+      />
       <TouchableOpacity>
-        <Icon name="delete" size={25} />
+        <Icon name="delete" size={25} onPress={onRemove} />
       </TouchableOpacity>
     </View>
   );
 };
 
-export default CategoryItem;
+const mapStateToProps = state => {
+  return {
+    categories: state.categories
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({}, dispatch);
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CategoryItem);
