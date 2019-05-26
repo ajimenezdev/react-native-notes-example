@@ -20,6 +20,7 @@ import {
 } from "ReactNativeNotas/src/screens";
 import CustomDrawer from "./CustomDrawer";
 import withColors from "ReactNativeNotas/src/components/withColors";
+import DrawerHeaderButton from "./DrawerHeaderButton";
 
 const getHeaderConfig = colors => ({
   defaultNavigationOptions: {
@@ -60,9 +61,10 @@ const getAppStack = colors => {
                 tab3: SettingsTab3
               },
               {
-                navigationOptions: {
-                  title: "Ajustes"
-                },
+                navigationOptions: ({ navigation }) => ({
+                  title: "Ajustes",
+                  headerLeft: <DrawerHeaderButton navigation={navigation} />
+                }),
                 tabBarOptions: {
                   style: {
                     backgroundColor: colors.primary,

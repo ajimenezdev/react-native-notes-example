@@ -23,11 +23,6 @@ const styles = StyleSheet.create({
 });
 
 class NotesScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Notas",
-    headerLeft: <DrawerHeaderButton navigation={navigation} />
-  });
-
   openNote = note => {
     this.props.navigation.navigate("Note", {
       note: note,
@@ -80,7 +75,14 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators({}, dispatch);
 };
 
-export default connect(
+const NotesScreenHOC = connect(
   mapStateToProps,
   mapDispatchToProps
 )(withColors(NotesScreen));
+
+NotesScreenHOC.navigationOptions = ({ navigation }) => ({
+  title: "Notas",
+  headerLeft: <DrawerHeaderButton navigation={navigation} />
+});
+
+export default NotesScreenHOC;
