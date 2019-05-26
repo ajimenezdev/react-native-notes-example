@@ -43,11 +43,6 @@ const styles = StyleSheet.create({
 });
 
 class CategoriesScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Notas",
-    headerLeft: <DrawerHeaderButton navigation={navigation} />
-  });
-
   constructor(props) {
     super(props);
 
@@ -178,7 +173,15 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
+const CategoriesScreenHOC = connect(
   mapStateToProps,
   mapDispatchToProps
 )(withColors(CategoriesScreen));
+
+
+CategoriesScreenHOC.navigationOptions = ({ navigation }) => ({
+  title: "Categorías",
+  headerLeft: <DrawerHeaderButton navigation={navigation} />
+});
+
+export default CategoriesScreenHOC;
