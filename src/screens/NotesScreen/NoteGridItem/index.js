@@ -49,7 +49,8 @@ class NoteGridItem extends Component {
     Animated.timing(this.state.scaleAnim, {
       toValue: 0,
       duration: 500,
-      easing: Easing.inOut(Easing.cubic)
+      easing: Easing.inOut(Easing.cubic),
+      useNativeDriver: true
     }).start(() => this.props.removeNote(note.id));
   };
 
