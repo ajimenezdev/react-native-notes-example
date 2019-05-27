@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { View, StyleSheet } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Animated,
+  Easing,
+  Platform
+} from "react-native";
 import firebase from "react-native-firebase";
 import {
   Button,
@@ -51,26 +58,95 @@ class SignInScreen extends Component {
       email: null,
       password: null,
       passwordConfirm: null,
-      signup: false
+      signup: false,
+      loginScaleAnim: new Animated.Value(1),
+      loginActivityOpacityAnim: new Animated.Value(0),
+      loginBtnOpacityAnim: new Animated.Value(1),
+      loginOrRegistering: false
     };
   }
 
+  startLoginAnim = () => {
+    this.setState({ loginOrRegistering: true });
+    const buttonAnimation = Platform.select({
+      ios: () =>
+        Animated.timing(this.state.loginBtnOpacityAnim, {
+          toValue: 0.1,
+          duration: 500,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true
+        }),
+      android: () =>
+        Animated.timing(this.state.loginScaleAnim, {
+          toValue: 0.3,
+          duration: 500,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true
+        })
+    })();
+    Animated.parallel([
+      buttonAnimation,
+      Animated.timing(this.state.loginActivityOpacityAnim, {
+        toValue: 1,
+        duration: 500,
+        easing: Easing.inOut(Easing.cubic),
+        useNativeDriver: true
+      })
+    ]).start();
+  };
+
+  stopLoginAnim = () => {
+    const buttonAnimation = Platform.select({
+      ios: () =>
+        Animated.timing(this.state.loginBtnOpacityAnim, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true
+        }),
+      android: () =>
+        Animated.timing(this.state.loginScaleAnim, {
+          toValue: 1,
+          duration: 500,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true
+        })
+    })();
+    Animated.parallel([
+      buttonAnimation,
+      Animated.timing(this.state.loginActivityOpacityAnim, {
+        toValue: 0,
+        duration: 500,
+        easing: Easing.inOut(Easing.cubic),
+        useNativeDriver: true
+      })
+    ]).start(() => this.setState({ loginOrRegistering: false }));
+  };
+
   loginAction = () => {
     const { email, password } = this.state;
+    this.startLoginAnim();
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => this.props.navigation.navigate("Main"))
-      .catch(error => this.setState({ errorMessage: error.message }));
+      .catch(error => {
+        this.setState({ errorMessage: error.message });
+        this.stopLoginAnim();
+      });
   };
 
   signupAction = () => {
     const { email, password, passwordConfirm } = this.state;
+    this.startLoginAnim();
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => this.props.navigation.navigate("App"))
-      .catch(error => this.setState({ errorMessage: error.message }));
+      .catch(error => {
+        this.setState({ errorMessage: error.message });
+        this.stopLoginAnim();
+      });
   };
 
   toggleSignupLogin = () => {
@@ -84,8 +160,13 @@ class SignInScreen extends Component {
       password,
       passwordConfirm,
       errorMessage,
-      signup
+      signup,
+      loginScaleAnim,
+      loginActivityOpacityAnim,
+      loginBtnOpacityAnim,
+      loginOrRegistering
     } = this.state;
+    const isAndroid = Platform.OS === "android";
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text style={styles.title}>ReactNative Notes</Text>
@@ -138,14 +219,50 @@ class SignInScreen extends Component {
               />
             </View>
             <View style={styles.button}>
-              <Button primary title="Login" onPress={this.loginAction} />
+              <Animated.View
+                style={{
+                  transform: [{ scaleX: loginScaleAnim }],
+                  opacity: loginBtnOpacityAnim
+                }}
+              >
+                <Button
+                  primary
+                  title={loginOrRegistering && isAndroid ? "" : "Login"}
+                  onPress={this.loginAction}
+                />
+              </Animated.View>
+              {loginOrRegistering && (
+                <Animated.View
+                  style={{ marginTop: -28, opacity: loginActivityOpacityAnim }}
+                >
+                  <ActivityIndicator color={colors.accent} />
+                </Animated.View>
+              )}
             </View>
           </View>
         )}
         {signup && (
           <View style={styles.buttons}>
             <View style={styles.button}>
-              <Button primary title="Registro" onPress={this.signupAction} />
+              <Animated.View
+                style={{
+                  transform: [{ scaleX: loginScaleAnim }],
+                  opacity: loginBtnOpacityAnim
+                }}
+              >
+                <Button
+                  primary
+                  title={loginOrRegistering && isAndroid ? "" : "Registro"}
+                  onPress={this.signupAction}
+                />
+              </Animated.View>
+              {loginOrRegistering && (
+                <Animated.View
+                  style={{ marginTop: -28, opacity: loginActivityOpacityAnim }}
+                >
+                  <ActivityIndicator color={colors.accent} />
+                </Animated.View>
+              )}
             </View>
             <View style={styles.button}>
               <Button
