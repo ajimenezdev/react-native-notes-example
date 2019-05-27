@@ -62,6 +62,7 @@ class SignInScreen extends Component {
       loginScaleAnim: new Animated.Value(1),
       loginActivityOpacityAnim: new Animated.Value(0),
       loginBtnOpacityAnim: new Animated.Value(1),
+      shakeAnim: new Animated.Value(0),
       loginOrRegistering: false
     };
   }
@@ -112,15 +113,27 @@ class SignInScreen extends Component {
           useNativeDriver: true
         })
     })();
-    Animated.parallel([
-      buttonAnimation,
-      Animated.timing(this.state.loginActivityOpacityAnim, {
-        toValue: 0,
+
+    Animated.sequence([
+      Animated.parallel([
+        buttonAnimation,
+        Animated.timing(this.state.loginActivityOpacityAnim, {
+          toValue: 0,
+          duration: 500,
+          easing: Easing.inOut(Easing.cubic),
+          useNativeDriver: true
+        })
+      ]),
+      Animated.timing(this.state.shakeAnim, {
+        toValue: 1,
         duration: 500,
         easing: Easing.inOut(Easing.cubic),
         useNativeDriver: true
       })
-    ]).start(() => this.setState({ loginOrRegistering: false }));
+    ]).start(() => {
+      this.setState({ loginOrRegistering: false });
+      this.state.shakeAnim.setValue(0); // reset value
+    });
   };
 
   loginAction = () => {
@@ -164,6 +177,7 @@ class SignInScreen extends Component {
       loginScaleAnim,
       loginActivityOpacityAnim,
       loginBtnOpacityAnim,
+      shakeAnim,
       loginOrRegistering
     } = this.state;
     const isAndroid = Platform.OS === "android";
@@ -221,7 +235,15 @@ class SignInScreen extends Component {
             <View style={styles.button}>
               <Animated.View
                 style={{
-                  transform: [{ scaleX: loginScaleAnim }],
+                  transform: [
+                    { scaleX: loginScaleAnim },
+                    {
+                      translateX: shakeAnim.interpolate({
+                        inputRange: [0, 0.2, 0.4, 0.6, 0.8, 0.9, 1],
+                        outputRange: [0, -10, 10, -10, 10, -10, 0]
+                      })
+                    }
+                  ],
                   opacity: loginBtnOpacityAnim
                 }}
               >
@@ -246,7 +268,15 @@ class SignInScreen extends Component {
             <View style={styles.button}>
               <Animated.View
                 style={{
-                  transform: [{ scaleX: loginScaleAnim }],
+                  transform: [
+                    { scaleX: loginScaleAnim },
+                    {
+                      translateX: shakeAnim.interpolate({
+                        inputRange: [0, 0.2, 0.4, 0.6, 0.8, 0.9, 1],
+                        outputRange: [0, -10, 10, -10, 10, -10, 0]
+                      })
+                    }
+                  ],
                   opacity: loginBtnOpacityAnim
                 }}
               >
