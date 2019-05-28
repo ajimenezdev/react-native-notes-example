@@ -14,6 +14,7 @@ import {
   MenuOption,
   MenuTrigger
 } from "react-native-popup-menu";
+import { Transition } from "react-navigation-fluid-transitions";
 import { removeNote } from "ReactNativeNotas/src/redux/notesReducer";
 import { Text } from "ReactNativeNotas/src/components";
 import withColors from "ReactNativeNotas/src/components/withColors";
@@ -24,8 +25,18 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 130
   },
+  content: {
+    flex: 1
+  },
   title: {
     fontWeight: "bold"
+  },
+  background: {
+    position: "absolute",
+    flex: 1,
+    height: 120,
+    left: 0,
+    right: 0
   }
 });
 
@@ -69,18 +80,22 @@ class NoteGridItem extends Component {
         ]}
       >
         <TouchableOpacity
-          style={[
-            basicStyles.paper,
-            { flex: 1 },
-            {
-              backgroundColor:
-                (category && colors.categoryColors[category.colorIdx]) ||
-                colors.backgroundContent
-            }
-          ]}
+          style={[basicStyles.paper, styles.content]}
           onPress={() => onPress(note)}
           onLongPress={() => this.setState({ isMenuOpen: true })}
         >
+          <Transition shared={`color${note.id}`}>
+            <View
+              style={[
+                styles.background,
+                {
+                  backgroundColor:
+                    (category && colors.categoryColors[category.colorIdx]) ||
+                    colors.backgroundContent
+                }
+              ]}
+            />
+          </Transition>
           <Menu opened={isMenuOpen}>
             <MenuTrigger />
             <MenuOptions opened={isMenuOpen}>
@@ -96,8 +111,12 @@ class NoteGridItem extends Component {
               />
             </MenuOptions>
           </Menu>
-          <Text style={styles.title}>{title}</Text>
-          <Text numberOfLines={5}>{text}</Text>
+          <Transition shared={`title${note.id}`}>
+            <Text style={styles.title}>{title}</Text>
+          </Transition>
+          <Transition shared={`text${note.id}`}>
+            <Text numberOfLines={5}>{text}</Text>
+          </Transition>
         </TouchableOpacity>
       </Animated.View>
     );

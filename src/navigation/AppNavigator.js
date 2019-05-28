@@ -7,7 +7,7 @@ import {
   createBottomTabNavigator,
   createMaterialTopTabNavigator
 } from "react-navigation";
-
+import { FluidNavigator } from "react-navigation-fluid-transitions";
 import {
   NotesScreen,
   NoteScreen,
@@ -34,6 +34,19 @@ const getHeaderConfig = colors => ({
   }
 });
 
+const getActiveRouteState = function(route) {
+  if (
+    !route.routes ||
+    route.routes.length === 0 ||
+    route.index >= route.routes.length
+  ) {
+    return route;
+  }
+
+  const childActiveRoute = route.routes[route.index];
+  return getActiveRouteState(childActiveRoute);
+};
+
 const getAppStack = colors => {
   const headerConfig = getHeaderConfig(colors);
   return createAppContainer(
@@ -41,10 +54,26 @@ const getAppStack = colors => {
       {
         Notas: createStackNavigator(
           {
-            NotesList: NotesScreen,
-            Note: NoteScreen
+            fluidNotes: FluidNavigator({
+              Notas: NotesScreen,
+              Nota: NoteScreen
+            })
           },
-          headerConfig
+          {
+            ...headerConfig,
+            defaultNavigationOptions: ({ navigation }) => ({
+              ...headerConfig.defaultNavigationOptions,
+              headerTitle: getActiveRouteState(navigation.state).routeName,
+              headerLeft: (
+                <DrawerHeaderButton
+                  navigation={navigation}
+                  showBackButton={
+                    getActiveRouteState(navigation.state).routeName !== "Notas"
+                  }
+                />
+              )
+            })
+          }
         ),
         Categorías: createStackNavigator(
           {

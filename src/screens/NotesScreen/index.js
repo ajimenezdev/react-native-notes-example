@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
 
 class NotesScreen extends Component {
   openNote = note => {
-    this.props.navigation.navigate("Note", {
+    this.props.navigation.navigate("Nota", {
       note: note,
       title: note ? "Editar Nota" : "Nueva Nota"
     });
@@ -58,6 +58,7 @@ class NotesScreen extends Component {
             </View>
           }
         />
+
         <FAB accent text="+" onPress={() => this.openNote(null)} />
       </View>
     );

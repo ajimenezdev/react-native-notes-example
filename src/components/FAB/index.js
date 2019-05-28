@@ -1,5 +1,6 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
+import { Transition } from "react-navigation-fluid-transitions";
 import withColors from "../withColors";
 import Text from "../Text";
 
@@ -39,27 +40,29 @@ const FAB = props => {
     ...otherProps
   } = props;
   return (
-    <TouchableOpacity
-      style={[
-        styles.fabContainer,
-        style,
-        {
-          backgroundColor:
-            (primary && colors.primary) ||
-            (secondary && colors.secondary) ||
-            (accent && colors.accent) ||
-            primaryColor
-        }
-      ]}
-      {...otherProps}
-    >
-      {text && (
-        <Text style={[{ color: colors.primaryTextContrast }, styles.fabText]}>
-          {text}
-        </Text>
-      )}
-      {!text && children}
-    </TouchableOpacity>
+    <Transition appear="scale">
+      <TouchableOpacity
+        style={[
+          styles.fabContainer,
+          style,
+          {
+            backgroundColor:
+              (primary && colors.primary) ||
+              (secondary && colors.secondary) ||
+              (accent && colors.accent) ||
+              primaryColor
+          }
+        ]}
+        {...otherProps}
+      >
+        {text && (
+          <Text style={[{ color: colors.primaryTextContrast }, styles.fabText]}>
+            {text}
+          </Text>
+        )}
+        {!text && children}
+      </TouchableOpacity>
+    </Transition>
   );
 };
 

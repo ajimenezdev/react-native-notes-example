@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Transition } from "react-navigation-fluid-transitions";
 import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import {
   HR,
@@ -121,18 +122,20 @@ class CategoriesScreen extends Component {
     const { categoryColors } = colors;
     return (
       <View style={[basicStyles.container, styles.container]}>
-        <View style={[styles.row, basicStyles.paper]}>
-          <TextInput
-            style={styles.addInput}
-            placeholder="Nueva categoría"
-            value={newCategory.category}
-            onChangeText={this.updateNewCategory}
-          />
-          <TouchableOpacity onPress={() => this.openChangeColor(null)}>
-            <ColorView color={categoryColors[newCategory.colorIdx]} />
-          </TouchableOpacity>
-          <Button title="+" onPress={this.addCategory} />
-        </View>
+        <Transition appear="right">
+          <View style={[styles.row, basicStyles.paper]}>
+            <TextInput
+              style={styles.addInput}
+              placeholder="Nueva categoría"
+              value={newCategory.category}
+              onChangeText={this.updateNewCategory}
+            />
+            <TouchableOpacity onPress={() => this.openChangeColor(null)}>
+              <ColorView color={categoryColors[newCategory.colorIdx]} />
+            </TouchableOpacity>
+            <Button title="+" onPress={this.addCategory} />
+          </View>
+        </Transition>
         <FlatList
           style={styles.list}
           data={categories}

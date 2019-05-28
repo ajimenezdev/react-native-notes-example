@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import { Transition } from "react-navigation-fluid-transitions";
 import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import {
   HR,
@@ -28,7 +29,10 @@ const styles = StyleSheet.create({
   },
   note: {
     fontSize: 16,
-    textAlignVertical: "top"
+    textAlignVertical: "top",
+    minHeight: 100,
+    maxHeight: "90%",
+    width: "100%"
   },
   timestamp: {
     width: "100%",
@@ -46,6 +50,17 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-around",
     marginTop: 10
+  },
+  content: {
+    width: "100%",
+    maxHeight: "80%"
+  },
+  contentBackground: {
+    position: "absolute",
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
   }
 });
 
@@ -103,7 +118,19 @@ class NoteScreen extends Component {
     const category = this.getCategory(categoryId);
     return (
       <View style={basicStyles.container}>
-        <View style={[basicStyles.paper, { width: "100%" }]}>
+        <View style={[basicStyles.paper, styles.content]}>
+          <Transition shared={`color${id}`}>
+            <View
+              style={[
+                styles.contentBackground,
+                {
+                  backgroundColor:
+                    (category && colors.categoryColors[category.colorIdx]) ||
+                    colors.backgroundContent
+                }
+              ]}
+            />
+          </Transition>
           <View style={styles.timestamp}>
             {created && (
               <Text>
@@ -112,21 +139,27 @@ class NoteScreen extends Component {
               </Text>
             )}
           </View>
-          <TextInput
-            style={[styles.input, styles.title]}
-            placeholder="Título"
-            value={title}
-            onChangeText={text => this.updateNoteState({ title: text })}
-          />
+          <Transition shared={`title${id}`}>
+            <TextInput
+              style={[styles.input, styles.title]}
+              placeholder="Título"
+              value={title}
+              onChangeText={text => this.updateNoteState({ title: text })}
+            />
+          </Transition>
           <HR />
-          <TextInput
-            style={[styles.input, styles.note]}
-            placeholder="Nota"
-            multiline={true}
-            numberOfLines={4}
-            value={text}
-            onChangeText={text => this.updateNoteState({ text })}
-          />
+          <Transition shared={`text${id}`}>
+            <TextInput
+              style={[styles.input, styles.note]}
+              placeholder="Nota"
+              multiline={true}
+              numberOfLines={4}
+              value={text}
+              onChangeText={text => this.updateNoteState({ text })}
+            />
+          </Transition>
+        </View>
+        <Transition appear="scale">
           <TouchableOpacity
             style={styles.categoryRow}
             onPress={this.toggleCategoryPicker}
@@ -139,11 +172,13 @@ class NoteScreen extends Component {
             )}
             {!category && <Text>Elige categoría</Text>}
           </TouchableOpacity>
-        </View>
-        <View style={[styles.buttonRow]}>
-          {id && <Button danger title="Borrar" onPress={this.removeNote} />}
-          <Button primary title="Guardar" onPress={this.saveNote} />
-        </View>
+        </Transition>
+        <Transition appear="scale">
+          <View style={[styles.buttonRow]}>
+            {id && <Button danger title="Borrar" onPress={this.removeNote} />}
+            <Button primary title="Guardar" onPress={this.saveNote} />
+          </View>
+        </Transition>
         <CategoryPicker
           visible={modalVisible}
           onChange={this.handleChangeCategory}

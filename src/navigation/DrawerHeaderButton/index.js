@@ -3,11 +3,15 @@ import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import withColors from "ReactNativeNotas/src/components/withColors";
 
-const DrawerHeaderButton = ({ navigation, colors }) => (
-  <TouchableOpacity onPress={() => navigation.openDrawer()}>
+const DrawerHeaderButton = ({ navigation, showBackButton, colors }) => (
+  <TouchableOpacity
+    onPress={() =>
+      showBackButton ? navigation.pop() : navigation.openDrawer()
+    }
+  >
     <Icon
       style={{ color: colors.headerText, marginLeft: 15 }}
-      name="menu"
+      name={showBackButton ? "arrow-left" : "menu"}
       size={25}
     />
   </TouchableOpacity>

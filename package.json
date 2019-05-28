@@ -15,6 +15,7 @@
     "react-native-popup-menu": "^0.15.6",
     "react-native-vector-icons": "^6.4.2",
     "react-navigation": "^3.11.0",
+    "react-navigation-fluid-transitions": "^0.3.2",
     "react-redux": "^7.0.3",
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
