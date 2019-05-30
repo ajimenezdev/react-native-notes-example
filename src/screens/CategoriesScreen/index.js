@@ -139,7 +139,7 @@ class CategoriesScreen extends Component {
         <FlatList
           style={styles.list}
           data={categories}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id && item.id.toString()}
           renderItem={({ item }) => (
             <CategoryItem
               item={item}
@@ -163,6 +163,7 @@ class CategoriesScreen extends Component {
     );
   }
 }
+
 
 const mapStateToProps = state => {
   return {
