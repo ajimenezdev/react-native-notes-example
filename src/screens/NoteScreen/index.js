@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import {
   HR,
   CategoryPicker,
@@ -16,6 +16,7 @@ import {
   updateNote,
   removeNote
 } from "ReactNativeNotas/src/redux/notesReducer";
+import withColors from "ReactNativeNotas/src/components/withColors";
 
 const styles = StyleSheet.create({
   input: {
@@ -95,6 +96,8 @@ class NoteScreen extends Component {
     this.props.categories.find(c => c.id === categoryId);
 
   render() {
+    const { colors } = this.props;
+    const basicStyles = getBasicStyles(colors);
     const { note, modalVisible } = this.state;
     const { id, title, text, created, categoryId } = note || {};
     const category = this.getCategory(categoryId);
@@ -130,7 +133,7 @@ class NoteScreen extends Component {
           >
             {category && (
               <React.Fragment>
-                <ColorView color={category.color} />
+                <ColorView color={colors.categoryColors[category.colorIdx]} />
                 <Text>{category.category}</Text>
               </React.Fragment>
             )}
@@ -171,4 +174,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(NoteScreen);
+)(withColors(NoteScreen));

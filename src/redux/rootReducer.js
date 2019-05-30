@@ -1,10 +1,12 @@
 import { combineReducers } from "redux";
 import notesReducer from "./notesReducer";
 import categoriesReducer from "./categoriesReducer";
+import settingsReducer from "./settingsReducer";
 
 const combinedReducers = combineReducers({
   notes: notesReducer,
-  categories: categoriesReducer
+  categories: categoriesReducer,
+  settings: settingsReducer
 });
 
 const rootReducer = (state, action) => {

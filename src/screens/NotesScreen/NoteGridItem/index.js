@@ -1,7 +1,8 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Text } from "ReactNativeNotas/src/components";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import withColors from "ReactNativeNotas/src/components/withColors";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 
 const styles = StyleSheet.create({
   container: {
@@ -10,27 +11,29 @@ const styles = StyleSheet.create({
   },
   title: {
     fontWeight: "bold"
-  },
-  text: {}
+  }
 });
 
-const NoteGridItem = ({ note, category, onPress }) => {
+const NoteGridItem = ({ note, category, onPress, colors }) => {
   const { title, text } = note;
+  const basicStyles = getBasicStyles(colors);
   return (
     <TouchableOpacity
       style={[
         basicStyles.paper,
         styles.container,
-        { backgroundColor: (category && category.color) || "white" }
+        {
+          backgroundColor:
+            (category && colors.categoryColors[category.colorIdx]) ||
+            colors.backgroundContent
+        }
       ]}
       onPress={() => onPress(note)}
     >
       <Text style={styles.title}>{title}</Text>
-      <Text style={styles.text} numberOfLines={5}>
-        {text}
-      </Text>
+      <Text numberOfLines={5}>{text}</Text>
     </TouchableOpacity>
   );
 };
 
-export default NoteGridItem;
+export default withColors(NoteGridItem);

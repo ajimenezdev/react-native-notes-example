@@ -2,8 +2,9 @@ import React, { Component } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { FAB, Text } from "ReactNativeNotas/src/components/";
+import withColors from "ReactNativeNotas/src/components/withColors";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import NoteGridItem from "./NoteGridItem";
 import {
@@ -30,21 +31,6 @@ const styles = StyleSheet.create({
 });
 
 class NotesScreen extends Component {
-  static navigationOptions = ({ navigation }) => ({
-    title: "Notas",
-    headerLeft: <DrawerHeaderButton navigation={navigation} />
-  });
-
-  componentDidMount = () => {
-    this.props.watchNotes();
-    this.props.watchCategories();
-  };
-
-  componentWillUnmount = () => {
-    unsubscribeCategories();
-    unsubscribeNotes();
-  };
-
   openNote = note => {
     this.props.navigation.navigate("Note", {
       note: note,
@@ -58,7 +44,8 @@ class NotesScreen extends Component {
     this.props.categories.find(c => c.id === categoryId);
 
   render() {
-    const { notes } = this.props;
+    const { notes, colors } = this.props;
+    const basicStyles = getBasicStyles(colors);
     return (
       <View style={basicStyles.container}>
         <FlatList
@@ -104,7 +91,14 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(
+const NotesScreenHOC = connect(
   mapStateToProps,
   mapDispatchToProps
-)(NotesScreen);
+)(withColors(NotesScreen));
+
+NotesScreenHOC.navigationOptions = ({ navigation }) => ({
+  title: "Notas",
+  headerLeft: <DrawerHeaderButton navigation={navigation} />
+});
+
+export default NotesScreenHOC;

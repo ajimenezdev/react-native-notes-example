@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import {
   HR,
   ColorPicker,
@@ -48,7 +48,7 @@ class CategoriesScreen extends Component {
 
     this.defaultNewCat = {
       category: null,
-      color: props.colors.categoryColors[0]
+      colorIdx: 0
     };
 
     this.state = {
@@ -65,20 +65,20 @@ class CategoriesScreen extends Component {
     });
   };
 
-  handleChangeColor = color => {
+  handleChangeColor = colorIdx => {
     const { itemSelected } = this.state;
     if (itemSelected) {
       // Actualizar seleccionada
       this.props.updateCategory({
         ...itemSelected,
-        color
+        colorIdx
       });
       this.setState({ modalVisible: false, itemSelected: null });
     } else {
       // Actualizar nueva
       this.setState({
         modalVisible: false,
-        newCategory: { ...this.state.newCategory, color }
+        newCategory: { ...this.state.newCategory, colorIdx }
       });
     }
   };
@@ -112,12 +112,13 @@ class CategoriesScreen extends Component {
         }
       ]
     );
-    // this.props.removeCategory(category.id);
   };
 
   render() {
-    const { categories } = this.props;
+    const { categories, colors } = this.props;
+    const basicStyles = getBasicStyles(colors);
     const { modalVisible, itemSelected, newCategory } = this.state;
+    const { categoryColors } = colors;
     return (
       <View style={[basicStyles.container, styles.container]}>
         <View style={[styles.row, basicStyles.paper]}>
@@ -128,7 +129,7 @@ class CategoriesScreen extends Component {
             onChangeText={this.updateNewCategory}
           />
           <TouchableOpacity onPress={() => this.openChangeColor(null)}>
-            <ColorView color={newCategory.color} />
+            <ColorView color={categoryColors[newCategory.colorIdx]} />
           </TouchableOpacity>
           <Button title="+" onPress={this.addCategory} />
         </View>
@@ -149,7 +150,11 @@ class CategoriesScreen extends Component {
         <ColorPicker
           visible={modalVisible}
           onChange={this.handleChangeColor}
-          selectedColor={itemSelected ? itemSelected.color : newCategory.color}
+          selectedColor={
+            categoryColors[
+              itemSelected ? itemSelected.colorIdx : newCategory.colorIdx
+            ]
+          }
         />
       </View>
     );

@@ -1,11 +1,16 @@
 import React from "react";
 import { TouchableOpacity } from "react-native";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import withColors from "ReactNativeNotas/src/components/withColors";
 
-const DrawerHeaderButton = ({ navigation }) => (
+const DrawerHeaderButton = ({ navigation, colors }) => (
   <TouchableOpacity onPress={() => navigation.openDrawer()}>
-    <Icon style={{ color: "#fff", marginLeft: 15 }} name="menu" size={25} />
+    <Icon
+      style={{ color: colors.headerText, marginLeft: 15 }}
+      name="menu"
+      size={25}
+    />
   </TouchableOpacity>
 );
 
-export default DrawerHeaderButton;
+export default withColors(DrawerHeaderButton);

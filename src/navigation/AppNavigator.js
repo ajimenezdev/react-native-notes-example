@@ -12,17 +12,17 @@ import {
   NotesScreen,
   NoteScreen,
   CategoriesScreen,
-  SettingsScreen,
   SignInScreen,
   AuthLoadingScreen,
-  SettingsTab1,
+  StylesSettings,
   SettingsTab2,
   SettingsTab3
 } from "ReactNativeNotas/src/screens";
 import CustomDrawer from "./CustomDrawer";
-import { colors } from "ReactNativeNotas/src/components/withColors";
+import withColors from "ReactNativeNotas/src/components/withColors";
+import DrawerHeaderButton from "./DrawerHeaderButton";
 
-const headerConfig = {
+const getHeaderConfig = colors => ({
   defaultNavigationOptions: {
     headerStyle: {
       backgroundColor: colors.primary
@@ -32,62 +32,71 @@ const headerConfig = {
       fontWeight: "bold"
     }
   }
-};
+});
 
-const AppStack = createAppContainer(
-  createDrawerNavigator(
-    {
-      Notas: createStackNavigator(
-        {
-          NotesList: NotesScreen,
-          Note: NoteScreen
-        },
-        headerConfig
-      ),
-      Categorías: createStackNavigator(
-        {
-          CategoriesScreen: CategoriesScreen
-        },
-        headerConfig
-      ),
-      Ajustes: createStackNavigator(
-        {
-          tab: createMaterialTopTabNavigator(
-            {
-              tab1: SettingsTab1,
-              tab2: SettingsTab2,
-              tab3: SettingsTab3
-            },
-            {
-              navigationOptions: {
-                title: "Ajustes"
+const getAppStack = colors => {
+  const headerConfig = getHeaderConfig(colors);
+  return createAppContainer(
+    createDrawerNavigator(
+      {
+        Notas: createStackNavigator(
+          {
+            NotesList: NotesScreen,
+            Note: NoteScreen
+          },
+          headerConfig
+        ),
+        Categorías: createStackNavigator(
+          {
+            CategoriesScreen: CategoriesScreen
+          },
+          headerConfig
+        ),
+        Ajustes: createStackNavigator(
+          {
+            tab: createMaterialTopTabNavigator(
+              {
+                Estilos: StylesSettings,
+                tab2: SettingsTab2,
+                tab3: SettingsTab3
               },
-              tabBarOptions: {
-                style: {
-                  backgroundColor: colors.primary,
-                  elevation: 0
+              {
+                navigationOptions: ({ navigation }) => ({
+                  title: "Ajustes",
+                  headerLeft: <DrawerHeaderButton navigation={navigation} />
+                }),
+                tabBarOptions: {
+                  style: {
+                    backgroundColor: colors.primary,
+                    elevation: 0
+                  }
                 }
               }
-            }
-          )
-        },
-        {
-          ...headerConfig,
-          defaultNavigationOptions: {
-            ...headerConfig.defaultNavigationOptions,
-            headerStyle: {
-              ...headerConfig.defaultNavigationOptions.headerStyle,
-              elevation: 0
+            )
+          },
+          {
+            ...headerConfig,
+            defaultNavigationOptions: {
+              ...headerConfig.defaultNavigationOptions,
+              headerStyle: {
+                ...headerConfig.defaultNavigationOptions.headerStyle,
+                elevation: 0
+              }
             }
           }
-        }
-      )
-    },
-    {
-      contentComponent: props => <CustomDrawer {...props} />
-    }
-  )
-);
+        )
+      },
+      {
+        contentComponent: props => <CustomDrawer {...props} />
+      }
+    )
+  );
+};
+
+const AppStackComp = ({ colors }) => {
+  const AppStack = getAppStack(colors);
+  return <AppStack />;
+};
 
 const AuthStack = createStackNavigator(
   { SignIn: SignInScreen },
@@ -101,7 +110,7 @@ export default createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
-      App: AppStack,
+      App: withColors(AppStackComp),
       Auth: AuthStack
     },
     {

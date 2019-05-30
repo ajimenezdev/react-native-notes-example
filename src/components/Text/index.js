@@ -1,17 +1,11 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
-import { colors } from "../withColors";
+import { Text } from "react-native";
+import withColors from "../withColors";
 
-const styles = StyleSheet.create({
-  text: {
-    color: colors.text
-  }
-});
-
-const CustomText = ({ children, style, ...props }) => (
-  <Text style={[styles.text, style]} {...props}>
+const CustomText = ({ children, style, colors, ...props }) => (
+  <Text style={[{ color: colors.text }, style]} {...props}>
     {children}
   </Text>
 );
 
-export default CustomText;
+export default withColors(CustomText);

@@ -4,11 +4,11 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { ColorView, Text, TextInput } from "ReactNativeNotas/src/components";
+import withColors from "ReactNativeNotas/src/components/withColors";
 
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    // justifyContent: "space-between",
     alignItems: "center",
     paddingLeft: 10,
     paddingRight: 10
@@ -20,12 +20,18 @@ const styles = StyleSheet.create({
   }
 });
 
-const CategoryItem = ({ item, openChangeColor, onChangeText, onRemove }) => {
-  const { category, color } = item;
+const CategoryItem = ({
+  item,
+  openChangeColor,
+  onChangeText,
+  onRemove,
+  colors
+}) => {
+  const { category, colorIdx } = item;
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={() => openChangeColor(item)}>
-        <ColorView color={color} />
+        <ColorView color={colors.categoryColors[colorIdx]} />
       </TouchableOpacity>
       <TextInput
         style={styles.text}
@@ -33,7 +39,12 @@ const CategoryItem = ({ item, openChangeColor, onChangeText, onRemove }) => {
         onChangeText={onChangeText}
       />
       <TouchableOpacity>
-        <Icon name="delete" size={25} onPress={onRemove} />
+        <Icon
+          name="delete"
+          size={25}
+          onPress={onRemove}
+          style={{ color: colors.text }}
+        />
       </TouchableOpacity>
     </View>
   );
@@ -52,4 +63,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CategoryItem);
+)(withColors(CategoryItem));

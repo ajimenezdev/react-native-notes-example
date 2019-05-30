@@ -1,19 +1,13 @@
 import React from "react";
-import { TextInput, StyleSheet } from "react-native";
-import { colors } from "../withColors";
+import { TextInput } from "react-native";
+import withColors from "../withColors";
 
-const styles = StyleSheet.create({
-  text: {
-    color: colors.text
-  }
-});
-
-const CustomTextInput = ({ style, ...props }) => (
+const CustomTextInput = ({ style, colors, ...props }) => (
   <TextInput
-    style={[styles.text, style]}
+    style={[{ color: colors.text }, style]}
     placeholderTextColor={colors.placeHolder}
     {...props}
   />
 );
 
-export default CustomTextInput;
+export default withColors(CustomTextInput);

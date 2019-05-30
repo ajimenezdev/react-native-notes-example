@@ -1,6 +1,9 @@
 import React from "react";
 import { View, Modal, StyleSheet, TouchableOpacity } from "react-native";
-import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import withColors from "ReactNativeNotas/src/components/withColors";
 import ColorView from "../ColorView";
 import Text from "../Text";
 
@@ -9,7 +12,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     flex: 1,
-    backgroundColor: "rgba(0,0,0,0.2)"
+    backgroundColor: "rgba(0,0,0,0.2)" // no need to read it from colors, because it doesn't change, it is for the modal window
   },
   content: {
     padding: 15,
@@ -25,39 +28,40 @@ const styles = StyleSheet.create({
   }
 });
 
-import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-
 const CategoryPicker = ({
   selectedCategory,
   onChange,
   visible,
   onRequestClose,
-  categories
-}) => (
-  <Modal
-    animationType="fade"
-    transparent={true}
-    visible={visible}
-    onRequestClose={onRequestClose}
-  >
-    <View style={styles.container}>
-      <View style={[basicStyles.paper, styles.content]}>
-        <Text style={styles.title}>Elige categoría:</Text>
-        {categories.map(category => (
-          <TouchableOpacity
-            key={category.id}
-            style={styles.row}
-            onPress={() => onChange(category)}
-          >
-            <ColorView color={category.color} />
-            <Text>{category.category}</Text>
-          </TouchableOpacity>
-        ))}
+  categories,
+  colors
+}) => {
+  const basicStyles = getBasicStyles(colors);
+  return (
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={visible}
+      onRequestClose={onRequestClose}
+    >
+      <View style={styles.container}>
+        <View style={[basicStyles.paper, styles.content]}>
+          <Text style={styles.title}>Elige categoría:</Text>
+          {categories.map(category => (
+            <TouchableOpacity
+              key={category.id}
+              style={styles.row}
+              onPress={() => onChange(category)}
+            >
+              <ColorView color={colors.categoryColors[category.colorIdx]} />
+              <Text>{category.category}</Text>
+            </TouchableOpacity>
+          ))}
+        </View>
       </View>
-    </View>
-  </Modal>
-);
+    </Modal>
+  );
+};
 
 const mapStateToProps = state => {
   return {
@@ -65,4 +69,4 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(CategoryPicker);
+export default connect(mapStateToProps)(withColors(CategoryPicker));
