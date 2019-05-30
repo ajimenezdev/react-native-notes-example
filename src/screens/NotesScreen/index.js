@@ -6,6 +6,14 @@ import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { FAB, Text } from "ReactNativeNotas/src/components/";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import NoteGridItem from "./NoteGridItem";
+import {
+  watchNotes,
+  unsubscribeNotes
+} from "ReactNativeNotas/src/redux/notesReducer";
+import {
+  watchCategories,
+  unsubscribeCategories
+} from "ReactNativeNotas/src/redux/categoriesReducer";
 
 const styles = StyleSheet.create({
   list: {
@@ -27,6 +35,16 @@ class NotesScreen extends Component {
     headerLeft: <DrawerHeaderButton navigation={navigation} />
   });
 
+  componentDidMount = () => {
+    this.props.watchNotes();
+    this.props.watchCategories();
+  };
+
+  componentWillUnmount = () => {
+    unsubscribeCategories();
+    unsubscribeNotes();
+  };
+
   openNote = note => {
     this.props.navigation.navigate("Note", {
       note: note,
@@ -35,6 +53,8 @@ class NotesScreen extends Component {
   };
 
   getCategory = categoryId =>
+    categoryId &&
+    this.props.categories &&
     this.props.categories.find(c => c.id === categoryId);
 
   render() {
@@ -45,7 +65,7 @@ class NotesScreen extends Component {
           style={styles.list}
           contentContainerStyle={styles.contentContainer}
           data={notes}
-          keyExtractor={item => item.id}
+          keyExtractor={item => item && item.id}
           numColumns={2}
           renderItem={({ item }) => (
             <NoteGridItem
@@ -75,7 +95,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({}, dispatch);
+  return bindActionCreators(
+    {
+      watchNotes,
+      watchCategories
+    },
+    dispatch
+  );
 };
 
 export default connect(
