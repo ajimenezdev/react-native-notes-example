@@ -153,6 +153,7 @@ class CategoriesScreen extends Component {
   }
 }
 
+
 const mapStateToProps = state => {
   return {
     categories: state.categories
