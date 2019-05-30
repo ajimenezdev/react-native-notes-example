@@ -132,7 +132,7 @@ class CategoriesScreen extends Component {
         <FlatList
           style={styles.list}
           data={categories}
-          keyExtractor={item => item.id.toString()}
+          keyExtractor={item => item.id && item.id.toString()}
           renderItem={({ item }) => (
             <CategoryItem
               item={item}
@@ -174,7 +174,6 @@ const CategoriesScreenHOC = connect(
   mapStateToProps,
   mapDispatchToProps
 )(withColors(CategoriesScreen));
-
 
 CategoriesScreenHOC.navigationOptions = ({ navigation }) => ({
   title: "Categorías",

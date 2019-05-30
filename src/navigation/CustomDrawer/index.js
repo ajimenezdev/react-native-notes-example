@@ -6,8 +6,11 @@ import {
   StyleSheet,
   TouchableOpacity
 } from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { DrawerItems } from "react-navigation";
 import firebase from "react-native-firebase";
+import { logout } from "ReactNativeNotas/src/redux/rootReducer";
 
 const styles = StyleSheet.create({
   header: {
@@ -43,6 +46,11 @@ class CustomDrawer extends React.Component {
     this.setState({ currentUser });
   }
 
+  handleLogout = () => {
+    firebase.auth().signOut();
+    this.props.logout();
+  };
+
   render() {
     const { currentUser } = this.state;
     return (
@@ -55,10 +63,7 @@ class CustomDrawer extends React.Component {
         <View style={styles.items}>
           <DrawerItems style={{ flex: 1 }} {...this.props} />
         </View>
-        <TouchableOpacity
-          style={styles.footer}
-          onPress={() => firebase.auth().signOut()}
-        >
+        <TouchableOpacity style={styles.footer} onPress={this.handleLogout}>
           <Text style={styles.headerFooterText}>Logout</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -66,4 +71,20 @@ class CustomDrawer extends React.Component {
   }
 }
 
-export default CustomDrawer;
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      logout
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomDrawer);
