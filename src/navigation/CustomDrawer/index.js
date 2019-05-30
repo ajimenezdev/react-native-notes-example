@@ -1,7 +1,15 @@
 import React from "react";
-import { View, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity
+} from "react-native";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
 import { DrawerItems } from "react-navigation";
 import firebase from "react-native-firebase";
+import { logout } from "ReactNativeNotas/src/redux/rootReducer";
 import { Text } from "ReactNativeNotas/src/components";
 import withColors from "ReactNativeNotas/src/components/withColors";
 
@@ -41,6 +49,11 @@ class CustomDrawer extends React.Component {
     this.setState({ currentUser });
   }
 
+  handleLogout = () => {
+    firebase.auth().signOut();
+    this.props.logout();
+  };
+
   render() {
     const { colors } = this.props;
     const styles = getStyles(colors);
@@ -61,10 +74,7 @@ class CustomDrawer extends React.Component {
             {...this.props}
           />
         </View>
-        <TouchableOpacity
-          style={styles.footer}
-          onPress={() => firebase.auth().signOut()}
-        >
+        <TouchableOpacity style={styles.footer} onPress={this.handleLogout}>
           <Text style={styles.headerFooterText}>Logout</Text>
         </TouchableOpacity>
       </ScrollView>
@@ -72,4 +82,20 @@ class CustomDrawer extends React.Component {
   }
 }
 
-export default withColors(CustomDrawer);
+const mapStateToProps = state => {
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      logout
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withColors(CustomDrawer));
