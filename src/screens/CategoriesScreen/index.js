@@ -176,8 +176,6 @@ const CategoriesScreenHOC = connect(
   mapDispatchToProps
 )(withColors(CategoriesScreen));
 
-
-
 CategoriesScreenHOC.navigationOptions = ({ navigation }) => ({
   title: "Categorías",
   headerLeft: <DrawerHeaderButton navigation={navigation} />

@@ -1,6 +1,7 @@
 import React from "react";
 import {
   createAppContainer,
+  createSwitchNavigator,
   createStackNavigator,
   createDrawerNavigator,
   createBottomTabNavigator,
@@ -12,6 +13,8 @@ import {
   NoteScreen,
   CategoriesScreen,
   SettingsScreen,
+  SignInScreen,
+  AuthLoadingScreen,
   SettingsTab1,
   SettingsTab2,
   SettingsTab3
@@ -31,7 +34,7 @@ const headerConfig = {
   }
 };
 
-export default createAppContainer(
+const AppStack = createAppContainer(
   createDrawerNavigator(
     {
       Notas: createStackNavigator(
@@ -82,6 +85,27 @@ export default createAppContainer(
     },
     {
       contentComponent: props => <CustomDrawer {...props} />
+    }
+  )
+);
+
+const AuthStack = createStackNavigator(
+  { SignIn: SignInScreen },
+  {
+    mode: "modal",
+    headerMode: "none"
+  }
+);
+
+export default createAppContainer(
+  createSwitchNavigator(
+    {
+      AuthLoading: AuthLoadingScreen,
+      App: AppStack,
+      Auth: AuthStack
+    },
+    {
+      initialRouteName: "AuthLoading"
     }
   )
 );

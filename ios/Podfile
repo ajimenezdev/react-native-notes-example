@@ -6,7 +6,8 @@ target 'ReactNativeNotas' do
   # use_frameworks!
 
   # Pods for ReactNativeNotas
-  pod 'Firebase/Core'  
+  pod 'Firebase/Core'
+  pod 'Firebase/Auth'  
 
   target 'ReactNativeNotas-tvOSTests' do
     inherit! :search_paths
