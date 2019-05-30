@@ -1,15 +1,9 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  TextInput
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
-import { ColorView } from "ReactNativeNotas/src/components";
+import { ColorView, Text, TextInput } from "ReactNativeNotas/src/components";
 
 const styles = StyleSheet.create({
   container: {

@@ -1,14 +1,16 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import withColors from "ReactNativeNotas/src/components/withColors";
+import { Text } from "ReactNativeNotas/src/components";
 
 const HR = ({ size, color, colors }) => (
   <View
     style={{
       borderBottomColor: color || colors.secondary,
       borderBottomWidth: 1,
-      margin: 10,
-      width: size || "90%"
+      marginTop: 10,
+      marginBottom: 10,
+      width: size || "100%"
     }}
   />
 );

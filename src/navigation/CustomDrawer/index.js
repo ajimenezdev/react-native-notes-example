@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  Text,
   View,
   ScrollView,
   StyleSheet,
@@ -11,6 +10,7 @@ import { bindActionCreators } from "redux";
 import { DrawerItems } from "react-navigation";
 import firebase from "react-native-firebase";
 import { logout } from "ReactNativeNotas/src/redux/rootReducer";
+import { Text } from "ReactNativeNotas/src/components";
 
 const styles = StyleSheet.create({
   header: {

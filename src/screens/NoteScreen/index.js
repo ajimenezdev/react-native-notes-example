@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
-import { HR, CategoryPicker, ColorView } from "ReactNativeNotas/src/components";
+import {
+  HR,
+  CategoryPicker,
+  ColorView,
+  Text,
+  TextInput
+} from "ReactNativeNotas/src/components";
 import Button from "ReactNativeNotas/src/components/Button";
 import {
   addNote,
@@ -18,9 +18,6 @@ import {
 } from "ReactNativeNotas/src/redux/notesReducer";
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "flex-start"
-  },
   input: {
     width: "90%"
   },
@@ -42,6 +39,12 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
     flexDirection: "row",
     alignItems: "center"
+  },
+  buttonRow: {
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-around",
+    marginTop: 10
   }
 });
 
@@ -96,44 +99,48 @@ class NoteScreen extends Component {
     const { id, title, text, created, categoryId } = note || {};
     const category = this.getCategory(categoryId);
     return (
-      <View style={[basicStyles.container, styles.container]}>
-        <View style={styles.timestamp}>
-          {created && (
-            <Text>
-              {new Date(created).toLocaleTimeString()} -{" "}
-              {new Date(created).toLocaleDateString()}
-            </Text>
-          )}
+      <View style={basicStyles.container}>
+        <View style={[basicStyles.paper, { width: "100%" }]}>
+          <View style={styles.timestamp}>
+            {created && (
+              <Text>
+                {new Date(created).toLocaleTimeString()} -{" "}
+                {new Date(created).toLocaleDateString()}
+              </Text>
+            )}
+          </View>
+          <TextInput
+            style={[styles.input, styles.title]}
+            placeholder="Título"
+            value={title}
+            onChangeText={text => this.updateNoteState({ title: text })}
+          />
+          <HR />
+          <TextInput
+            style={[styles.input, styles.note]}
+            placeholder="Nota"
+            multiline={true}
+            numberOfLines={4}
+            value={text}
+            onChangeText={text => this.updateNoteState({ text })}
+          />
+          <TouchableOpacity
+            style={styles.categoryRow}
+            onPress={this.toggleCategoryPicker}
+          >
+            {category && (
+              <React.Fragment>
+                <ColorView color={category.color} />
+                <Text>{category.category}</Text>
+              </React.Fragment>
+            )}
+            {!category && <Text>Elige categoría</Text>}
+          </TouchableOpacity>
         </View>
-        <TextInput
-          style={[styles.input, styles.title]}
-          placeholder="Título"
-          value={title}
-          onChangeText={text => this.updateNoteState({ title: text })}
-        />
-        <HR />
-        <TextInput
-          style={[styles.input, styles.note]}
-          placeholder="Nota"
-          multiline={true}
-          numberOfLines={4}
-          value={text}
-          onChangeText={text => this.updateNoteState({ text })}
-        />
-        <TouchableOpacity
-          style={styles.categoryRow}
-          onPress={this.toggleCategoryPicker}
-        >
-          {category && (
-            <React.Fragment>
-              <ColorView color={category.color} />
-              <Text>{category.category}</Text>
-            </React.Fragment>
-          )}
-          {!category && <Text>Elige categoría</Text>}
-        </TouchableOpacity>
-        <Button accent title="Guardar" onPress={this.saveNote} />
-        {id && <Button secondary title="Borrar" onPress={this.removeNote} />}
+        <View style={[styles.buttonRow]}>
+          {id && <Button danger title="Borrar" onPress={this.removeNote} />}
+          <Button primary title="Guardar" onPress={this.saveNote} />
+        </View>
         <CategoryPicker
           visible={modalVisible}
           onChange={this.handleChangeCategory}

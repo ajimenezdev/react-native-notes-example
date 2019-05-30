@@ -1,6 +1,7 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
+import { View } from "react-native";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import { Text } from "ReactNativeNotas/src/components";
 
 class SettingsScreen extends Component {
   render() {

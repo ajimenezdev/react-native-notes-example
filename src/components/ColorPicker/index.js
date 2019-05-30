@@ -1,7 +1,8 @@
 import React from "react";
-import { Text, View, Modal, StyleSheet } from "react-native";
+import { View, Modal, StyleSheet } from "react-native";
 import ColorPalette from "react-native-color-palette";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
+import { Text } from "ReactNativeNotas/src/components";
 import withColors from "ReactNativeNotas/src/components/withColors";
 
 const styles = StyleSheet.create({

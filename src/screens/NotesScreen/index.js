@@ -1,9 +1,9 @@
 import React, { Component } from "react";
-import { Text, View, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import basicStyles from "ReactNativeNotas/src/styles/basicStyles";
-import { FAB } from "ReactNativeNotas/src/components/";
+import { FAB, Text } from "ReactNativeNotas/src/components/";
 import DrawerHeaderButton from "ReactNativeNotas/src/navigation/DrawerHeaderButton";
 import NoteGridItem from "./NoteGridItem";
 import {
@@ -16,7 +16,6 @@ import {
 } from "ReactNativeNotas/src/redux/categoriesReducer";
 
 const styles = StyleSheet.create({
-  container: {},
   list: {
     width: "100%"
   },
@@ -61,7 +60,7 @@ class NotesScreen extends Component {
   render() {
     const { notes } = this.props;
     return (
-      <View style={[basicStyles.container, styles.container]}>
+      <View style={basicStyles.container}>
         <FlatList
           style={styles.list}
           contentContainerStyle={styles.contentContainer}

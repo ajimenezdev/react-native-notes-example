@@ -5,8 +5,12 @@ export const colors = {
   primaryTextContrast: "#fff",
   secondary: "#ccc",
   accent: "#00b0a5",
-  background: "#fff",
+  danger: "#ff3232",
+  background: "rgb(240,240,240)",
+  backgroundContent: "#fff",
   shadowColor: "#000",
+  text: "#111",
+  placeHolder: "#aaa",
 
   categoryColors: ["#FFB3BA", "#FFDEB9", "#FFFFB9", "#B9FFC9", "#BAE0FF"]
 };

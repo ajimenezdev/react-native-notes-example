@@ -1,7 +1,12 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet } from "react-native";
 import firebase from "react-native-firebase";
-import { Button, withColors } from "ReactNativeNotas/src/components";
+import {
+  Button,
+  Text,
+  TextInput,
+  withColors
+} from "ReactNativeNotas/src/components";
 
 const styles = StyleSheet.create({
   container: {

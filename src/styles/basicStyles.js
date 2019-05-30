@@ -4,8 +4,10 @@ import { colors } from "ReactNativeNotas/src/components/withColors";
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: "flex-start",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: colors.background
   },
   title: {
     fontSize: 20,
@@ -13,8 +15,8 @@ const styles = StyleSheet.create({
     margin: 20
   },
   paper: {
-    backgroundColor: colors.background,
-    padding: 5,
+    backgroundColor: colors.backgroundContent,
+    padding: 15,
     margin: 5,
     elevation: 3,
     shadowColor: colors.shadowColor,
