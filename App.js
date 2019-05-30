@@ -10,9 +10,10 @@ import React, { Component } from "react";
 import { StatusBar } from "react-native";
 import { Provider } from "react-redux";
 import configureStore from "./src/redux/store";
+import { PersistGate } from "redux-persist/integration/react";
 import AppNavigator from "./src/navigation/AppNavigator";
 
-const store = configureStore();
+const { store, persistor } = configureStore();
 
 type Props = {};
 export default class App extends Component<Props> {
@@ -21,7 +22,9 @@ export default class App extends Component<Props> {
       <React.Fragment>
         <StatusBar barStyle="light-content" />
         <Provider store={store}>
-          <AppNavigator />
+          <PersistGate persistor={persistor}>
+            <AppNavigator />
+          </PersistGate>
         </Provider>
       </React.Fragment>
     );

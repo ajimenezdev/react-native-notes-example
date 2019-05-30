@@ -9,7 +9,7 @@ const defaultState = [];
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
     case ADD_NOTE:
-      return [...state, { ...action.note, id: uuid() }];
+      return [...state, { ...action.note, id: uuid(), created: new Date() }];
     case REMOVE_NOTE:
       return state.filter(note => note.id !== action.noteId);
     case UPDATE_NOTE:

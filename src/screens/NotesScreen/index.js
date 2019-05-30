@@ -35,6 +35,9 @@ class NotesScreen extends Component {
     });
   };
 
+  getCategory = categoryId =>
+    this.props.categories.find(c => c.id === categoryId);
+
   render() {
     const { notes } = this.props;
     return (
@@ -46,7 +49,11 @@ class NotesScreen extends Component {
           keyExtractor={item => item.id}
           numColumns={2}
           renderItem={({ item }) => (
-            <NoteGridItem note={item} onPress={this.openNote} />
+            <NoteGridItem
+              note={item}
+              category={this.getCategory(item.categoryId)}
+              onPress={this.openNote}
+            />
           )}
           ListEmptyComponent={
             <View style={styles.empty}>
@@ -63,7 +70,8 @@ class NotesScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    notes: state.notes
+    notes: state.notes,
+    categories: state.categories
   };
 };
 

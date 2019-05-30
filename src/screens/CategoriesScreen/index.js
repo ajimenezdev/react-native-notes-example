@@ -177,7 +177,8 @@ const CategoriesScreenHOC = connect(
 )(withColors(CategoriesScreen));
 
 
-CategoriesScreenHOC.navigationOptions = ({ navigation }) => ({=
+
+CategoriesScreenHOC.navigationOptions = ({ navigation }) => ({
   title: "Categorías",
   headerLeft: <DrawerHeaderButton navigation={navigation} />
 });
