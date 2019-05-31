@@ -38,6 +38,16 @@ class NotesScreen extends Component {
     });
   };
 
+  componentDidMount = () => {
+    this.props.watchNotes();
+    this.props.watchCategories();
+  };
+
+  componentWillUnmount = () => {
+    this.unsubscribeNotes();
+    this.unsubscribeCategories();
+  };
+
   getCategory = categoryId =>
     categoryId &&
     this.props.categories &&
