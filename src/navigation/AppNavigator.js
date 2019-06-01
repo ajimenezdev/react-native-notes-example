@@ -15,7 +15,7 @@ import {
   SignInScreen,
   AuthLoadingScreen,
   StylesSettings,
-  SettingsTab2,
+  AppSettings,
   SettingsTab3
 } from "ReactNativeNotas/src/screens";
 import CustomDrawer from "./CustomDrawer";
@@ -85,8 +85,8 @@ const getAppStack = colors => {
           {
             tab: createMaterialTopTabNavigator(
               {
+                App: AppSettings,
                 Estilos: StylesSettings,
-                tab2: SettingsTab2,
                 tab3: SettingsTab3
               },
               {

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { View, StyleSheet, FlatList } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import Snackbar from "react-native-snackbar";
 import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import { FAB, Text } from "ReactNativeNotas/src/components/";
 import withColors from "ReactNativeNotas/src/components/withColors";
@@ -15,6 +16,11 @@ import {
   watchCategories,
   unsubscribeCategories
 } from "ReactNativeNotas/src/redux/categoriesReducer";
+import {
+  onNotification,
+  onNotificationOpened,
+  onInitialNotification
+} from "ReactNativeNotas/src/utils/Notifications";
 
 const styles = StyleSheet.create({
   list: {
@@ -38,14 +44,49 @@ class NotesScreen extends Component {
     });
   };
 
+  onNotificationTap = notification => {
+    const { notes } = this.props;
+    const note = notes.find(n => n.id === notification.data.id);
+    this.openNote(note);
+  };
+
   componentDidMount = () => {
     this.props.watchNotes();
     this.props.watchCategories();
+
+    this.removeNotificationListener = onNotification(notification => {
+      Snackbar.show({
+        title: `${notification.title}: ${notification.body}`,
+        duration: Snackbar.LENGTH_INDEFINITE,
+        action: {
+          title: "Ver",
+          color: "green",
+          onPress: () => this.onNotificationTap(notification)
+        }
+      });
+    });
+
+    this.removeNotificationOpenListener = onNotificationOpened(
+      ({ notification }) => {
+        this.onNotificationTap(notification);
+      }
+    );
+
+    this.removeOnInitialNotificationListener = onInitialNotification(
+      ({ notification }) => {
+        this.onNotificationTap(notification);
+      }
+    );
   };
 
   componentWillUnmount = () => {
-    this.unsubscribeNotes();
-    this.unsubscribeCategories();
+    this.unsubscribeNotes && this.unsubscribeNotes();
+    this.unsubscribeCategories && this.unsubscribeCategories();
+    this.removeNotificationListener && this.removeNotificationListener();
+    this.removeNotificationOpenListener &&
+      this.removeNotificationOpenListener();
+    this.removeOnInitialNotificationListener &&
+      this.removeOnInitialNotificationListener();
   };
 
   getCategory = categoryId =>
