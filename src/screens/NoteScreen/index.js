@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
+import firebase from "react-native-firebase";
 import { Transition } from "react-navigation-fluid-transitions";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import DateTimePicker from "react-native-modal-datetime-picker";
 import getBasicStyles from "ReactNativeNotas/src/styles/basicStyles";
 import {
   HR,
@@ -64,6 +67,8 @@ const styles = StyleSheet.create({
   }
 });
 
+getDate = dateObj => (dateObj instanceof Date ? dateObj : dateObj.toDate());
+
 class NoteScreen extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.title
@@ -74,7 +79,8 @@ class NoteScreen extends Component {
 
     this.state = {
       note: props.navigation.getParam("note"),
-      modalVisible: false
+      modalVisible: false,
+      dateTimeVisible: false
     };
   }
 
@@ -92,12 +98,44 @@ class NoteScreen extends Component {
     this.setState({ note: newNote });
   };
 
+  createReminderNotification = () => {
+    const { note } = this.state;
+    const { id, title, text } = note;
+    const notification = new firebase.notifications.Notification()
+      .setNotificationId(`localReminder_${id}`)
+      .setTitle(title)
+      .setBody(text)
+      .setData({
+        id: id
+      });
+
+    const channel = new firebase.notifications.Android.Channel(
+      "local-channel",
+      "Local Channel",
+      firebase.notifications.Android.Importance.Max
+    ).setDescription("localChannel");
+
+    // Create the channel
+    firebase.notifications().android.createChannel(channel);
+    notification.android.setChannelId("local-channel");
+    const date = getDate(this.state.note.reminderDate);
+    firebase.notifications().scheduleNotification(notification, {
+      fireDate: date.getTime()
+    });
+  };
+
   saveNote = () => {
     const { note } = this.state;
     if (note.id) {
       this.props.updateNote(note);
     } else {
       const resp = this.props.addNote(note);
+    }
+    // comprobar si hay que añadir recordatorio
+    if (
+      note.reminderDate !== this.props.navigation.getParam("note").reminderDate
+    ) {
+      this.createReminderNotification();
     }
     this.props.navigation.goBack();
   };
@@ -110,12 +148,24 @@ class NoteScreen extends Component {
   getCategory = categoryId =>
     this.props.categories.find(c => c.id === categoryId);
 
+  toggleDateTimePicker = () => {
+    this.setState({ dateTimeVisible: !this.state.dateTimeVisible });
+  };
+
+  setReminderDate = date => {
+    this.updateNoteState({ reminderDate: date });
+    this.toggleDateTimePicker();
+  };
+
   render() {
     const { colors } = this.props;
     const basicStyles = getBasicStyles(colors);
-    const { note, modalVisible } = this.state;
-    const { id, title, text, created, categoryId } = note || {};
+    const { note, modalVisible, dateTimeVisible } = this.state;
+    const { id, title, text, created, categoryId, reminderDate: reminder } =
+      note || {};
     const category = this.getCategory(categoryId);
+    const createdDate = created && getDate(created);
+    const reminderDate = reminder && getDate(reminder);
     return (
       <View style={basicStyles.container}>
         <View style={[basicStyles.paper, styles.content]}>
@@ -134,8 +184,8 @@ class NoteScreen extends Component {
           <View style={styles.timestamp}>
             {created && (
               <Text>
-                {new Date(created).toLocaleTimeString()} -{" "}
-                {new Date(created).toLocaleDateString()}
+                {new Date(createdDate).toLocaleTimeString()} -{" "}
+                {new Date(createdDate).toLocaleDateString()}
               </Text>
             )}
           </View>
@@ -173,6 +223,33 @@ class NoteScreen extends Component {
             {!category && <Text>Elige categoría</Text>}
           </TouchableOpacity>
         </Transition>
+
+        <Transition appear="scale">
+          <TouchableOpacity
+            style={styles.categoryRow}
+            onPress={this.toggleDateTimePicker}
+          >
+            <Icon
+              name="clock-outline"
+              size={25}
+              style={{ color: colors.text }}
+            />
+            {!reminderDate && <Text>Añadir recordatorio</Text>}
+            {reminderDate && (
+              <React.Fragment>
+                <Text>
+                  {new Date(reminderDate).toLocaleTimeString()} -{" "}
+                  {new Date(reminderDate).toLocaleDateString()}
+                </Text>
+                <Button
+                  danger
+                  title="Borrar"
+                  onPress={() => this.updateNoteState({ reminderDate: null })}
+                />
+              </React.Fragment>
+            )}
+          </TouchableOpacity>
+        </Transition>
         <Transition appear="scale">
           <View style={[styles.buttonRow]}>
             {id && <Button danger title="Borrar" onPress={this.removeNote} />}
@@ -183,6 +260,14 @@ class NoteScreen extends Component {
           visible={modalVisible}
           onChange={this.handleChangeCategory}
           onRequestClose={this.toggleCategoryPicker}
+        />
+        <DateTimePicker
+          isVisible={dateTimeVisible}
+          date={reminderDate || new Date()}
+          minimumDate={new Date()}
+          onConfirm={this.setReminderDate}
+          onCancel={this.toggleDateTimePicker}
+          mode="datetime"
         />
       </View>
     );

@@ -2,7 +2,7 @@ import firebase from "react-native-firebase";
 
 // Escucha cambios en el FCM token asignado
 const onTokenRefresh = callback =>
-  firebase.messaging().onTokenRefresh(fcmToken => cb(fcmToken));
+  firebase.messaging().onTokenRefresh(fcmToken => callback(fcmToken));
 
 // Se ejecuta cuando se recibe una notificacion mientras la aplicacion esta abierta on en segundo plano
 const onNotification = callback =>
