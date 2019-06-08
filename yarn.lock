@@ -4951,6 +4951,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-animatable@^1.2.4:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-animatable/-/react-native-animatable-1.3.2.tgz#4783ee1a73dc98815aef234ce6b819f80bfe7d80"
+  integrity sha512-rmah3KQ63ft8DxkzFUwJSuZeq+oSYwldoGF4DTOR5WM2WR5wiWLgBAtrAHlI3Di3by323uOR21s+MlqPcHz2Kw==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-color-palette@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/react-native-color-palette/-/react-native-color-palette-2.0.3.tgz#0be382911554b10d2e0351b8772f4b5d50ca03ab"
@@ -4973,6 +4980,22 @@ react-native-gesture-handler@^1.2.1:
     invariant "^2.2.2"
     prop-types "^15.5.10"
 
+react-native-modal-datetime-picker@^7.4.2:
+  version "7.4.2"
+  resolved "https://registry.yarnpkg.com/react-native-modal-datetime-picker/-/react-native-modal-datetime-picker-7.4.2.tgz#d000c4c9675ca8add779820f2947c814e0aa2e53"
+  integrity sha512-RzQiYvbtBE/FJdaPhFcyc4tjw4LZ6AuE3uWPRqiTy4WSoE9pGV1QzrJzPIYhrJfmKWLF72ntnzG8uQyUAx/Znw==
+  dependencies:
+    prop-types "^15.7.2"
+    react-native-modal "^9.0.0"
+
+react-native-modal@^9.0.0:
+  version "9.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-modal/-/react-native-modal-9.0.0.tgz#0bfd0770361a2e5c6e0072bfdb0f1277f9662dba"
+  integrity sha512-j4xeIK9noHU/ksp2Ndc8NI1qJvjApToqGvqLEu2wtYeaISanbhtd0S3V4hZkSlCa3DZtegl6aaMZBLeH1q6xfA==
+  dependencies:
+    prop-types "^15.6.2"
+    react-native-animatable "^1.2.4"
+
 react-native-popup-menu@^0.15.6:
   version "0.15.6"
   resolved "https://registry.yarnpkg.com/react-native-popup-menu/-/react-native-popup-menu-0.15.6.tgz#ebf885c289028e330dd66d887e685a8b0c2de970"
@@ -4990,10 +5013,10 @@ react-native-safe-area-view@^0.14.1:
   resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-1.0.0-alpha.22.tgz#7a120377b52aa9bbb94d0b8541a014026be9289b"
   integrity sha512-kSyAt0AeVU6N7ZonfV6dP6iZF8B7Bce+tk3eujXhzBGsLg0VSLnU7uE9VqJF0xdQrHR91ZjGgVMieo/8df9KTA==
 
-react-native-snackbar@^0.5.5:
-  version "0.5.5"
-  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-0.5.5.tgz#b481e8a37ef2c435acd54d37976705a23d3deeee"
-  integrity sha512-P98ucpnjHtsPKqzYaQwL7yki+Lem63431Qa8+qyGgTb8mNzqKeiK6glMU+1lpgJr/eqgO+V0agtfb0CSSl0fWg==
+react-native-snackbar@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-snackbar/-/react-native-snackbar-1.0.0.tgz#d4afd037f5ea488115e160f20eb65e4ed30ddc9d"
+  integrity sha512-4xW41LVzuaVy4E9n1/IWnJkXRWrKbJ/qsAhyYnHoIu738TBLqNAk44aAE7eSCYkSFfHSchAVDiuIdQDUDYWcSA==
 
 react-native-tab-view@^1.2.0, react-native-tab-view@^1.4.1:
   version "1.4.1"
