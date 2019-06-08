@@ -5,7 +5,9 @@ import {
   ActivityIndicator,
   Animated,
   Easing,
-  Platform
+  Platform,
+  UIManager,
+  LayoutAnimation
 } from "react-native";
 import firebase from "react-native-firebase";
 import {
@@ -14,6 +16,9 @@ import {
   TextInput,
   withColors
 } from "ReactNativeNotas/src/components";
+
+UIManager.setLayoutAnimationEnabledExperimental &&
+  UIManager.setLayoutAnimationEnabledExperimental(true);
 
 const styles = StyleSheet.create({
   container: {
@@ -163,6 +168,7 @@ class SignInScreen extends Component {
   };
 
   toggleSignupLogin = () => {
+    LayoutAnimation.easeInEaseOut();
     this.setState({ signup: !this.state.signup });
   };
 
